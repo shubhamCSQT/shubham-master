@@ -25,11 +25,6 @@ export default function ProfileScreen() {
     },
 
     {
-      name: 'Language',
-      onPress: function () {},
-    },
-
-    {
       name: 'Add Address',
       onPress: function () {},
     },
