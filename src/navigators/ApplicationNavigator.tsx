@@ -31,7 +31,7 @@ const ApplicationNavigator = () => {
         ref={navigationRef}
         onReady={() => {
           routeNameRef.current =
-            navigationRef?.current?.getCurrentRoute()?.name;
+            navigationRef?.current?.getCurrentRoute()?.name ?? '';
         }}
         onStateChange={async () => {
           const previousRouteName = routeNameRef.current;
