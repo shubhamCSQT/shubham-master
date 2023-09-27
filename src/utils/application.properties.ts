@@ -1,4 +1,3 @@
 export const applicationProperties = {
-  baseUrl: 'https://glue.de.faas-suite-prod.cloud.spryker.toys/',
-  // baseUrl: 'http://glue.us.spryker.local/',
+  baseUrl:'http://103.113.36.20:9005/'
 };

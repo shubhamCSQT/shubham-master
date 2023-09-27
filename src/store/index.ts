@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import thunkMiddleware from 'redux-thunk';
 import {
   persistReducer,
   persistStore,
@@ -15,12 +16,24 @@ import { MMKV } from 'react-native-mmkv';
 
 import { api } from '../services/api';
 import theme from './theme';
-
+import getProductsByCategoryApiSlice from '../redux/productsApi/ProductsApiSlice';
+import getProductDetailsApiSlice from '../redux/productDetails/ProductDetailsApiSlice';
+import getNewArrivalApiSlice from '../redux/newArrivalApi/NewArrivalApiSlice';
+import getBestSellingsApiSlice from '../redux/bestSellingProductApi/BestSellingProductApiSlice';
+import getCollectionsApiSlice from '../redux/collectionsApi/CollectionsApiSlice';
+import getProductsBySubCategoryApiSlice from '../redux/productsBySubCategory/SubCategoryProductsApiSlice'
+import getCustomerDetailsApiSlice from '../redux/profileApi/ProfileApiSlice';
 const reducers = combineReducers({
   theme,
+  getCustomerDetailsApiSlice,
+  getProductsByCategoryApiSlice,
+  getProductDetailsApiSlice,
+  getNewArrivalApiSlice,
+  getBestSellingsApiSlice,
+  getCollectionsApiSlice,
+  getProductsBySubCategoryApiSlice,
   [api.reducerPath]: api.reducer,
 });
-
 const storage = new MMKV();
 export const reduxStorage: Storage = {
   setItem: (key, value) => {
@@ -47,20 +60,21 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware => {
-    const middlewares = getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(api.middleware);
+  // middleware: getDefaultMiddleware => {
+  //   const middlewares = getDefaultMiddleware({
+  //     serializableCheck: {
+  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  //     },
+  //   }).concat(api.middleware);
 
-    if (__DEV__ && !process.env.JEST_WORKER_ID) {
-      const createDebugger = require('redux-flipper').default;
-      middlewares.push(createDebugger());
-    }
+  //   if (__DEV__ && !process.env.JEST_WORKER_ID) {
+  //     const createDebugger = require('redux-flipper').default;
+  //     middlewares.push(createDebugger());
+  //   }
 
-    return middlewares;
-  },
+  //   return middlewares;
+  // },
+  middleware:[thunkMiddleware]
 });
 
 const persistor = persistStore(store);
