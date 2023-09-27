@@ -16,8 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 import CommonSolidButton from '../../components/CommonSolidButton/CommonSolidButton';
 import HomeHeader from '../home/homeHeader/HomeHeader';
 import SelectAuthMethod from './components/SelectAuthMethod';
-import { useDispatch } from 'react-redux';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { useDispatch, useSelector } from 'react-redux';
 import CommonLoading from '@/components/CommonLoading';
 import axios from 'axios';
 import { applicationProperties } from '@/utils/application.properties';
@@ -50,24 +50,14 @@ export default function LoginScreen(props) {
       var token = response?.data?.data?.validation?.authCookie?.Value;
       signIn(token);
       // CommonLoading.hide();
-      // navigation.navigate('PersonalDetailsScreen');
       dispatch(getCustomerDetails(`user-details/tarundrupal@yopmail.com`)).then(
         res => {
-          // console.log('res: ', res?.payload?.data?.userProfile?.email);
-          // return false;
-          // console.log(
-          //   'response.data?.data?.attributes?.firstName: ',
-          //   res.payload?.data?.data?.[0]?.attributes?.firstName,
-          // );
-          // CommonLoading.hide();
-          // Toast.show({
-          //   type: 'success',
-          //   text1: `Welcome ${
-          //     res.payload?.data?.data?.[0]?.attributes?.firstName || ''
-          //   }!`,
-          //   text2: 'You are now logged in. 🎉',
-          //   position: 'top',
-          // });
+          Toast.show({
+            type: 'success',
+            text1: `Welcome ${res?.payload?.data?.userProfile?.email || ''}!`,
+            text2: 'You are now logged in. 🎉',
+            position: 'top',
+          });
           navigation.navigate('PersonalDetailsScreen');
           setIsLoading(false);
         },
@@ -113,15 +103,9 @@ export default function LoginScreen(props) {
             onPress={() => {
               navigation.goBack();
             }}
-          >
-            {/* <Box padding="s4">
-              <CrossIcon />
-            </Box> */}
-          </TouchableOpacity>
+          ></TouchableOpacity>
         </Box>
-        <Box>
-          <HomeHeader />
-        </Box>
+
         <Box mt="s4">
           <SelectAuthMethod
             selectedOption={selectedOption}

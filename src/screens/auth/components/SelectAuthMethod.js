@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Box, Text, theme } from '@atoms';
-import Icons from '../../../assets/constants/Icons';
 
 const SelectAuthMethod = ({ selectedOption, setSelectedOption }) => {
   const IS_LOGIN = selectedOption === 'login';

@@ -14,6 +14,7 @@ import jwt_decode from 'jwt-decode';
 import * as Keychain from 'react-native-keychain';
 import { Alert } from 'react-native';
 import RNRestart from 'react-native-restart';
+import SignUpScreen from '@/screens/auth/SignUpScreen';
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext({});
@@ -128,6 +129,7 @@ const MainNavigator = () => {
           name="ProductDetailsScreen"
           component={ProductDetailsScreen}
         />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="CollectionsScreen" component={CollectionsScreen} />
         {state.userToken == null ? (
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
