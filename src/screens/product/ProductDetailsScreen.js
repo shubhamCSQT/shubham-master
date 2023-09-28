@@ -22,6 +22,7 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const ProductDetailsScreen = props => {
   const productId = props.route.params.product_id;
+  console.log('productId: ', productId);
 
   const navigation = useNavigation();
   const [selectedSkuId, setSelectedSkuId] = useState();
@@ -29,7 +30,7 @@ const ProductDetailsScreen = props => {
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [imageCarousel, setImageCarousel] = useState([]);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
-
+  const [productImage, setProductImage] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     setIsLoading(true);
@@ -110,7 +111,7 @@ const ProductDetailsScreen = props => {
                 flexGrow: 1,
               }}
             >
-              {!productDetails?.error ? (
+              {!productDetails?.error && imageCarousel ? (
                 <Box style={styles.productDetails}>
                   {/* <Image
                   style={styles.backImage}
@@ -118,7 +119,7 @@ const ProductDetailsScreen = props => {
                     uri: productImage,
                   }}
                 /> */}
-                  <CarouselCards images={imageCarousel} />
+                  <CarouselCards images={imageCarousel} crosSelling={null} />
                   <Box>
                     <Text variant="regular18">{productDetails.name}</Text>
                     <Text variant="regular18">
@@ -152,10 +153,15 @@ const ProductDetailsScreen = props => {
                     </Box>
                   </Box>
                   <Text mt="s6" variant="regular16"></Text>
+                  <CarouselCards
+                    images={imageCarousel}
+                    crosSelling={productDetails?.crossSellProduct}
+                  />
                 </Box>
               ) : (
                 <Text>Product is not available</Text>
               )}
+              <Box></Box>
             </ScrollView>
 
             <Box

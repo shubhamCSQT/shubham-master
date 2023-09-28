@@ -2,10 +2,11 @@ import { Box } from '@/atoms';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.9);
-export const CarouselCardItem = ({ item, index }) => {
+export const CarouselCrossSellingProducts = ({ item, index }) => {
   return (
     <Box style={styles.container} key={index}>
       <Image source={{ uri: item.image }} style={styles.image} />
+      <Text>hello shubham</Text>
     </Box>
   );
 };
