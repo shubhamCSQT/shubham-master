@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect} from 'react';
-import {StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import { Box ,Text, theme} from '@/atoms';
+import React, { useCallback, useEffect } from 'react';
+import { StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { Box, Text, theme } from '@/atoms';
 import ContentFullSection from './contentFull/ContentFullSection';
-import {useNavigation} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch, useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 import NewArrivals from './newArrival/NewArrivals';
 import BestSellingProducts from './bestSellingProducts/BestSellingProducts';
 const HomeScreen = () => {
@@ -12,32 +12,27 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
-  const ViewData = [
-    'ContentFullSection',
-    'NewArrival',
-    'bestSelling'
-  ];
+  const ViewData = ['ContentFullSection', 'NewArrival', 'bestSelling'];
 
-  const renderHomeItems = useCallback(({item}) => {
+  const renderHomeItems = useCallback(({ item }) => {
     switch (item) {
       case 'ContentFullSection':
         return <ContentFullSection />;
-          case 'NewArrival':
+      case 'NewArrival':
         return <NewArrivals />;
-         case 'bestSelling':
+      case 'bestSelling':
         return <BestSellingProducts />;
       default:
         return <></>;
     }
   }, []);
 
-
   return (
     <Box flex={1} backgroundColor="white">
       <FlatList
         data={ViewData}
         renderItem={renderHomeItems}
-          key={Math.random()}
+        key={Math.random()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: insets.top,

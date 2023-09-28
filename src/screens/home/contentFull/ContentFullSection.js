@@ -63,7 +63,6 @@ const ContentFullSection = () => {
             source={{ uri: item.url }}
             style={{
               width: ITEM_WIDTH - 32,
-              // height: ITEM_HEIGHT,
               height: ITEM_WIDTH - 32,
               borderRadius: 8,
             }}
