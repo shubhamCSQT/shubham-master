@@ -13,7 +13,15 @@ import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const Icon = ({ source, focused, color }) => {
+  const Icon = ({
+    source,
+    focused,
+    color,
+  }: {
+    source: any;
+    focused: boolean;
+    color: string;
+  }) => {
     return (
       <Image
         source={source}

@@ -10,7 +10,7 @@ import MainNavigator from './MainNavigator';
 import { useFlipper } from '@react-navigation/devtools';
 import { ApplicationStackParamList } from '../../@types/navigation';
 import { ThemeProvider } from '@shopify/restyle';
-import { darkTheme, lightTheme } from '@/atoms';
+import { darkTheme, lightTheme, theme } from '@/atoms';
 
 const Stack = createStackNavigator<ApplicationStackParamList>();
 
@@ -25,7 +25,9 @@ const ApplicationNavigator = () => {
   useFlipper(navigationRef);
 
   return (
-    <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
+    <SafeAreaView
+      style={[Layout.fill, { backgroundColor: theme.colors.background }]}
+    >
       <NavigationContainer
         theme={NavigationTheme}
         ref={navigationRef}

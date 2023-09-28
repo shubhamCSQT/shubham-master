@@ -20,38 +20,8 @@ export const AuthContext = React.createContext({});
 
 // @refresh reset
 const MainNavigator = () => {
-  useEffect(() => {
-    const getTokenExpiry = async () => {
-      const token = await AsyncStorage.getItem('tokenExpiry');
-      if (token) {
-        var decoded = jwt_decode(token);
-        var tokenExpiryDate = new Date(0);
-        tokenExpiryDate.setUTCSeconds(decoded.exp);
-        var currentDate = new Date();
-
-        var remainingTime = tokenExpiryDate.getTime() - currentDate.getTime();
-
-        if (remainingTime / 1000 <= 0) {
-          Alert.alert(
-            'Your session has expired.\n',
-            'Please login again to continue.',
-            [
-              {
-                text: 'Ok',
-                onPress: () => {},
-                style: 'destructive',
-              },
-            ],
-          );
-          authContext.signOut();
-        }
-      }
-    };
-    getTokenExpiry();
-  }, [authContext]);
-
   const [state, dispatch] = useReducer(
-    (prevState, action) => {
+    (prevState: any, action: { type: any; token: any }) => {
       switch (action.type) {
         case 'RESTORE_TOKEN':
           return {
@@ -82,7 +52,7 @@ const MainNavigator = () => {
 
   const authContext = useMemo(
     () => ({
-      signIn: async data => {
+      signIn: async (data: string) => {
         await Keychain.setGenericPassword('email', data);
         dispatch({ type: 'SIGN_IN', token: data });
       },
@@ -90,12 +60,16 @@ const MainNavigator = () => {
         await Keychain.resetGenericPassword();
         AsyncStorage.removeItem('tokenExpiry');
         RNRestart.Restart();
-        dispatch({ type: 'SIGN_OUT' });
+        dispatch({
+          type: 'SIGN_OUT',
+          token: null,
+        });
       },
       state: state,
     }),
     [state],
   );
+
   useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken;
@@ -111,6 +85,36 @@ const MainNavigator = () => {
 
     bootstrapAsync();
   }, []);
+
+  useEffect(() => {
+    const getTokenExpiry = async () => {
+      const token = await AsyncStorage.getItem('tokenExpiry');
+      if (token) {
+        var decoded: { exp: number } = jwt_decode(token);
+        var tokenExpiryDate = new Date(0);
+        tokenExpiryDate.setUTCSeconds(decoded.exp);
+        var currentDate = new Date();
+
+        var remainingTime = tokenExpiryDate.getTime() - currentDate.getTime();
+
+        if (remainingTime / 1000 <= 0) {
+          Alert.alert(
+            'Your session has expired.\n',
+            'Please login again to continue.',
+            [
+              {
+                text: 'Ok',
+                onPress: () => {},
+                style: 'destructive',
+              },
+            ],
+          );
+          authContext.signOut();
+        }
+      }
+    };
+    getTokenExpiry();
+  }, [authContext]);
 
   return (
     <AuthContext.Provider value={authContext}>
