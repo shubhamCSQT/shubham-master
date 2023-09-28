@@ -1,10 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem';
+import { SLIDER_WIDTH, CarouselCardItem, ITEM_WIDTH } from './CarouselCardItem';
 import data from './data';
 import { Box } from '@/atoms';
-const CarouselCards = ({ images }) => {
+import { CarouselCrossSellingProducts } from './CarouselCrossSellingProducts';
+const CarouselCards = ({ images, crosSelling }) => {
   const [index, setIndex] = React.useState(0);
   const isCarousel = React.useRef(null);
 
@@ -15,7 +16,9 @@ const CarouselCards = ({ images }) => {
         layoutCardOffset={9}
         ref={isCarousel}
         data={images}
-        renderItem={CarouselCardItem}
+        renderItem={
+          !crosSelling ? CarouselCardItem : CarouselCrossSellingProducts
+        }
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         onSnapToItem={index => setIndex(index)}
