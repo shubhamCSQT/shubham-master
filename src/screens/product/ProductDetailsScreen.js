@@ -153,10 +153,6 @@ const ProductDetailsScreen = props => {
                     </Box>
                   </Box>
                   <Text mt="s6" variant="regular16"></Text>
-                  <CarouselCards
-                    images={imageCarousel}
-                    crosSelling={productDetails?.crossSellProduct}
-                  />
                 </Box>
               ) : (
                 <Text>Product is not available</Text>

@@ -9,6 +9,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -59,7 +60,7 @@ const ContentFullSection = () => {
           </Box>
         </ImageBackground> */}
 
-          <FastImage
+          <Image
             source={{ uri: item.url }}
             style={{
               width: ITEM_WIDTH - 32,

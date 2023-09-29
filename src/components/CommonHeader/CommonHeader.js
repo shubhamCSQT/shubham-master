@@ -40,18 +40,9 @@ const CommonHeader = ({
       <SafeAreaView style={styles.container} {...props}>
         <Box flexDirection="row" alignItems="center" maxWidth={'80%'}>
           <GoBackButton onPress={onPress} />
-          {/* <Text variant="bold18" style={{ maxWidth: '90%' }} numberOfLines={1}>
+          <Text variant="bold18" style={{ maxWidth: '90%' }} numberOfLines={1}>
             {title}
-          </Text> */}
-          <TextInput
-            style={styles.input}
-            placeholder="Search products here"
-            value={searchText}
-            onChangeText={text => {
-              setSearchText(text);
-            }}
-            placeholderTextColor={theme.colors.lightGrey}
-          />
+          </Text>
         </Box>
         {/* <SearchIcon /> */}
 

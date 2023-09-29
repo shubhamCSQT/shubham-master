@@ -1,7 +1,7 @@
 import { Box } from '@/atoms';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
-export const SLIDER_WIDTH = Dimensions.get('window').width;
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.9);
+export const SLIDER_WIDTH = Dimensions.get('window').width + 1;
+export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
 export const CarouselCardItem = ({ item, index }) => {
   return (
     <Box style={styles.container} key={index}>

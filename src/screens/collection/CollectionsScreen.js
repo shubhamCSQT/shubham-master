@@ -126,22 +126,24 @@ const CategorySection = () => {
   };
 
   return (
-    <Box flex={1} paddingHorizontal="paddingHorizontal">
+    <>
       <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} />
-      <FlatList
-        data={categories}
-        renderItem={renderCategory}
-        // keyExtractor={item => item.nodeId.toString()}
-        contentContainerStyle={styles.flatListContainer}
-        ListEmptyComponent={
-          isLoading ? (
-            <ActivityIndicator color={theme.colors.sushiittoRed} />
-          ) : (
-            <Text>EMPTY LIST</Text>
-          )
-        }
-      />
-    </Box>
+      <Box flex={1} paddingHorizontal="paddingHorizontal">
+        <FlatList
+          data={categories}
+          renderItem={renderCategory}
+          // keyExtractor={item => item.nodeId.toString()}
+          contentContainerStyle={styles.flatListContainer}
+          ListEmptyComponent={
+            isLoading ? (
+              <ActivityIndicator color={theme.colors.sushiittoRed} />
+            ) : (
+              <Text>EMPTY LIST</Text>
+            )
+          }
+        />
+      </Box>
+    </>
   );
 };
 
