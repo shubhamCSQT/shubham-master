@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storage } from '@/store';
 
 export const IS_IOS = Platform.OS === 'ios';
 
@@ -15,3 +16,5 @@ export const getItemFromAsyncStorage = async <T>(
     return null;
   }
 };
+
+export const customerId = storage.getString('customerId');

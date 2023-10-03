@@ -17,10 +17,8 @@ import { Box, Text } from '@atoms';
 import CarouselCards from '@/components/imageCarousel/CarouselCards';
 import { theme } from '@/atoms';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsyncThunk';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 const ProductDetailsScreen = props => {
   const { width } = useWindowDimensions();
 
