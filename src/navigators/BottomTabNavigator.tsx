@@ -9,6 +9,7 @@ import { Image } from 'react-native';
 import Icons from '../assets/constants/Icons';
 import CollectionScreen from '@/screens/collection/CollectionsScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
+import { theme } from '@/atoms';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,12 @@ export default function BottomTabNavigator() {
 
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false, tabBarActiveTintColor: '#4486c6' }}
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#4486c6',
+        tabBarActiveBackgroundColor: theme.backgroundColor,
+        tabBarInactiveBackgroundColor: theme.backgroundColor,
+      }}
     >
       <Tab.Screen
         name="Home"

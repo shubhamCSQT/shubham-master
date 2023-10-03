@@ -1,16 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Text, theme } from '@atoms';
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Box, theme } from '@atoms';
+import { Animated, Dimensions, StyleSheet, Image } from 'react-native';
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 const ITEM_HEIGHT = 200;
@@ -45,28 +37,14 @@ const ContentFullSection = () => {
           shadowRadius={10}
           elevation={7}
         >
-          {/* <ImageBackground source={{uri: item.url}} style={styles.itemContainer}>
-          <Box flex={1} justifyContent="flex-end" mb="s40">
-            <></>
-            <Text
-              fontSize={28}
-              color="white"
-              fontWeight="700"
-              numberOfLines={2}
-              marginHorizontal="s16">
-              {item?.description}
-            </Text>
-          </Box>
-        </ImageBackground> */}
-
-          <FastImage
-            source={{ uri: item.url }}
+          <Image
+            source={{ uri: item?.url }}
             style={{
               width: ITEM_WIDTH - 32,
               height: ITEM_WIDTH - 32,
               borderRadius: 8,
             }}
-            resizeMode="cover"
+            contentFit="cover"
           />
         </Box>
       </Box>

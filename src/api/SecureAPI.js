@@ -15,6 +15,7 @@ const get = async (endPoint, data, loading) => {
         Authorization: token,
       },
       validateStatus: () => true,
+      withCredentials: true,
     });
 
     if (response.data !== undefined && response.data.status) {
@@ -55,6 +56,7 @@ const post = async (endPoint, data, loading) => {
           Authorization: token,
         },
         validateStatus: () => true,
+        withCredentials: true,
       },
     );
 
@@ -97,6 +99,7 @@ const Delete = async (endPoint, data, loading) => {
           Authorization: token,
         },
         validateStatus: () => true,
+        withCredentials: true,
       },
       data,
     );
@@ -139,6 +142,7 @@ const put = async (endPoint, data, loading) => {
           Authorization: token,
         },
         validateStatus: () => true,
+        withCredentials: true,
       },
     );
 
@@ -181,6 +185,7 @@ const patch = async (endPoint, data, loading) => {
           Accept: 'application/json',
         },
         validateStatus: () => true,
+        withCredentials: true,
       },
     );
 

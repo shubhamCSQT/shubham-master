@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Box, Text, theme } from '@/atoms';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 import React, { useContext, useEffect, useState } from 'react';
@@ -12,9 +13,11 @@ const PersonalDetailsScreen = () => {
   const { signOut } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+
   const getUserDetails = useSelector(
     state => state.getCustomerDetailsApiSlice?.customerDetails?.data,
   );
+
   const onPressLogout = () => {
     signOut();
   };
@@ -32,19 +35,19 @@ const PersonalDetailsScreen = () => {
           <View style={styles.profileDetailsContainer}>
             <ProfileRow
               label="First Name"
-              value={getUserDetails.userProfile.firstName}
+              value={getUserDetails?.userProfile.firstName}
             />
             <ProfileRow
               label="Last Name"
-              value={getUserDetails.userProfile.lastName}
+              value={getUserDetails?.userProfile.lastName}
             />
             <ProfileRow
               label="Email"
-              value={getUserDetails.userProfile.email}
+              value={getUserDetails?.userProfile.email}
             />
             <ProfileRow
               label="state"
-              value={getUserDetails.userProfile.state}
+              value={getUserDetails?.userProfile.state}
             />
             {/* <ProfileRow label="Date Of Birth" value={profileDataAttributes.dateOfBirth} /> */}
           </View>

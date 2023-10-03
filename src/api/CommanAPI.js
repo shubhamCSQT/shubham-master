@@ -33,7 +33,7 @@ const get = async (endPoint, data) => {
 
 const post = async (endPoint, data, headers) => {
   try {
-    let axs = axios.create({ withCredentials: false });
+    let axs = axios.create({ withCredentials: true });
     let response = await axs.post(
       applicationProperties.baseUrl + endPoint,
       data,
