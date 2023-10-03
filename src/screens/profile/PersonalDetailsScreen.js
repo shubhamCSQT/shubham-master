@@ -15,7 +15,7 @@ const PersonalDetailsScreen = () => {
   const dispatch = useDispatch();
 
   const getUserDetails = useSelector(
-    state => state.getCustomerDetailsApiSlice?.customerDetails?.data,
+    state => state?.getCustomerDetailsApiSlice?.customerDetails?.data || [],
   );
 
   const onPressLogout = () => {
@@ -32,25 +32,29 @@ const PersonalDetailsScreen = () => {
         </View>
       ) : (
         <>
-          <View style={styles.profileDetailsContainer}>
-            <ProfileRow
-              label="First Name"
-              value={getUserDetails?.userProfile.firstName}
-            />
-            <ProfileRow
-              label="Last Name"
-              value={getUserDetails?.userProfile.lastName}
-            />
-            <ProfileRow
-              label="Email"
-              value={getUserDetails?.userProfile.email}
-            />
-            <ProfileRow
-              label="state"
-              value={getUserDetails?.userProfile.state}
-            />
-            {/* <ProfileRow label="Date Of Birth" value={profileDataAttributes.dateOfBirth} /> */}
-          </View>
+          {getUserDetails ? (
+            <View style={styles.profileDetailsContainer}>
+              <ProfileRow
+                label="First Name"
+                value={getUserDetails?.userProfile?.firstName}
+              />
+              <ProfileRow
+                label="Last Name"
+                value={getUserDetails?.userProfile?.lastName}
+              />
+              <ProfileRow
+                label="Email"
+                value={getUserDetails?.userProfile?.email}
+              />
+              <ProfileRow
+                label="state"
+                value={getUserDetails?.userProfile?.state}
+              />
+              {/* <ProfileRow label="Date Of Birth" value={profileDataAttributes.dateOfBirth} /> */}
+            </View>
+          ) : (
+            ''
+          )}
         </>
       )}
       <View style={{ paddingHorizontal: 20, paddingBottom: 10 }}>

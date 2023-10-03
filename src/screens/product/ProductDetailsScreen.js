@@ -22,7 +22,6 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const ProductDetailsScreen = props => {
   const productId = props.route.params.product_id;
-  console.log('productId: ', productId);
 
   const navigation = useNavigation();
   const [selectedSkuId, setSelectedSkuId] = useState();
@@ -153,10 +152,6 @@ const ProductDetailsScreen = props => {
                     </Box>
                   </Box>
                   <Text mt="s6" variant="regular16"></Text>
-                  <CarouselCards
-                    images={imageCarousel}
-                    crosSelling={productDetails?.crossSellProduct}
-                  />
                 </Box>
               ) : (
                 <Text>Product is not available</Text>

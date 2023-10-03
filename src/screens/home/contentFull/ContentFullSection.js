@@ -1,8 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, theme } from '@atoms';
-import { Animated, Dimensions, StyleSheet, Image } from 'react-native';
+import { Box, Text, theme } from '@atoms';
+import {
+  Animated,
+  Dimensions,
+  FlatList,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 const ITEM_HEIGHT = 200;
@@ -37,8 +46,22 @@ const ContentFullSection = () => {
           shadowRadius={10}
           elevation={7}
         >
+          {/* <ImageBackground source={{uri: item.url}} style={styles.itemContainer}>
+          <Box flex={1} justifyContent="flex-end" mb="s40">
+            <></>
+            <Text
+              fontSize={28}
+              color="white"
+              fontWeight="700"
+              numberOfLines={2}
+              marginHorizontal="s16">
+              {item?.description}
+            </Text>
+          </Box>
+        </ImageBackground> */}
+
           <Image
-            source={{ uri: item?.url }}
+            source={{ uri: item.url }}
             style={{
               width: ITEM_WIDTH - 32,
               height: ITEM_WIDTH - 32,
@@ -79,8 +102,6 @@ const ContentFullSection = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log('data: ', data);
-      console.log('data: ', data?.data?.sushiittoHomeContentCollection);
       setCmsData(data?.data?.sushiittoHomeContentCollection);
       // setCmsData(data.data);
       // Process the response data as per your requirements

@@ -49,7 +49,6 @@ const CategorySection = () => {
   }, [firstItem]);
 
   const renderSubCategory = ({ item }) => {
-    // console.log('item: ', item);
     return (
       <TouchableOpacity
         activeOpacity={0.8}
@@ -126,22 +125,24 @@ const CategorySection = () => {
   };
 
   return (
-    <Box flex={1} paddingHorizontal="paddingHorizontal">
+    <>
       <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} />
-      <FlatList
-        data={categories}
-        renderItem={renderCategory}
-        // keyExtractor={item => item.nodeId.toString()}
-        contentContainerStyle={styles.flatListContainer}
-        ListEmptyComponent={
-          isLoading ? (
-            <ActivityIndicator color={theme.colors.sushiittoRed} />
-          ) : (
-            <Text>EMPTY LIST</Text>
-          )
-        }
-      />
-    </Box>
+      <Box flex={1} paddingHorizontal="paddingHorizontal">
+        <FlatList
+          data={categories}
+          renderItem={renderCategory}
+          // keyExtractor={item => item.nodeId.toString()}
+          contentContainerStyle={styles.flatListContainer}
+          ListEmptyComponent={
+            isLoading ? (
+              <ActivityIndicator color={theme.colors.sushiittoRed} />
+            ) : (
+              <Text>EMPTY LIST</Text>
+            )
+          }
+        />
+      </Box>
+    </>
   );
 };
 
