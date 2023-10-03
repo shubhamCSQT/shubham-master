@@ -7,20 +7,22 @@ import { getNewArrival } from '@/redux/newArrivalApi/NewArrivalApiAsyncThunk';
 import HomeProducts from '../components/HomeProducts';
 const NewArrivals = () => {
   const dispatch = useDispatch();
+
   const newArrivals = useSelector(
     state => state?.getNewArrivalApiSlice?.newArrivals?.data || [],
   );
 
+  const renderItem = ({ item, index }) => <HomeProducts item={item} />;
+
   useEffect(() => {
-    dispatch(getNewArrival('vtex-new-arrivals'));
+    dispatch(getNewArrival('sfcc/new-arrivals'));
   }, []);
 
-  const renderItem = ({ item, index }) => <HomeProducts item={item} />;
   return (
     <Box style={styles.container}>
       {/* <CommonHeader title={title || 'All Products'} showCartIcon /> */}
       <>
-        {newArrivals.length != 0 ? (
+        {newArrivals.length !== 0 ? (
           <Text style={styles.heading}>New Arrivals</Text>
         ) : (
           ''

@@ -1,17 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Text, theme } from '@atoms';
-import {
-  Animated,
-  Dimensions,
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import { Box, theme } from '@atoms';
+import { Animated, Dimensions, StyleSheet, Image } from 'react-native';
 
 const ITEM_WIDTH = Dimensions.get('window').width;
 const ITEM_HEIGHT = 200;
@@ -112,7 +103,6 @@ const ContentFullSection = () => {
 
   useEffect(() => {
     fetchData();
-    console.log('fetchData(): ', fetchData());
   }, []);
 
   return (

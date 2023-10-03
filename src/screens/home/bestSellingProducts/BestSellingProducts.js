@@ -12,7 +12,7 @@ const BestSellingProducts = () => {
   );
 
   useEffect(() => {
-    dispatch(getBestSellings('vtex-best-selling-products'));
+    dispatch(getBestSellings('sfcc/best-selling-products'));
   }, []);
   const renderItem = ({ item, index }) => <HomeProducts item={item} />;
   return (

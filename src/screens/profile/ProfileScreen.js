@@ -51,7 +51,11 @@ export default function ProfileScreen() {
   };
 
   return (
-    <Box style={{ paddingTop: insets.top }} backgroundColor="" flex={1}>
+    <Box
+      style={{ paddingTop: insets.top }}
+      backgroundColor="background"
+      flex={1}
+    >
       {true ? (
         <>
           <Box flex={1}>

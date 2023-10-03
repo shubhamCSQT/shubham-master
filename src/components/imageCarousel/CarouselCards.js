@@ -6,6 +6,7 @@ import data from './data';
 import { Box } from '@/atoms';
 import { CarouselCrossSellingProducts } from './CarouselCrossSellingProducts';
 const CarouselCards = ({ images, crosSelling }) => {
+  console.log('images: ', images);
   const [index, setIndex] = React.useState(0);
   const isCarousel = React.useRef(null);
 
@@ -15,7 +16,7 @@ const CarouselCards = ({ images, crosSelling }) => {
         layout="tinder"
         layoutCardOffset={9}
         ref={isCarousel}
-        data={images}
+        data={images?.images}
         renderItem={
           !crosSelling ? CarouselCardItem : CarouselCrossSellingProducts
         }

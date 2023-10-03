@@ -12,8 +12,11 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const parent_id = props.route?.params.parent_id;
+  const parent_id = props.route?.params.item.parent_id;
+  const categoryId = props.route?.params?.item?.Id;
+
   const dispatch = useDispatch();
+
   const productsByCategory = useSelector(
     state =>
       state?.getProductsByCategoryApiSlice?.productsByCategory?.data
@@ -21,13 +24,13 @@ const ProductsByCategory = props => {
   );
   useEffect(() => {
     setIsLoading(true);
-    dispatch(ProductsApiAsyncThunk(`vtex-plp-by-category/${parent_id}`))
+    dispatch(ProductsApiAsyncThunk(`sfcc/products-by-category/${categoryId}`))
       .then(() => setIsLoading(false))
       .catch(error => {
         console.error('Error fetching products:', error);
         setIsLoading(false);
       });
-  }, [parent_id]);
+  }, [categoryId]);
 
   const renderItem = ({ item, index }) => (
     <>

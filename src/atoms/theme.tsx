@@ -418,7 +418,7 @@ export const theme = createTheme({
 export const themeDark = createTheme({
   ...theme,
   colors: {
-    background: '#121212',
+    background: '#FFFFFF',
     white: '#FFFFFF',
     darkText: '#00313A',
     lightText: '#272727',

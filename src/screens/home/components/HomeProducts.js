@@ -5,9 +5,9 @@ import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
 import { useDispatch } from 'react-redux';
 
-export default function HomeProducts({ item, index }) {
+const HomeProducts = ({ item, index }) => {
+  console.log('abc');
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -77,7 +77,9 @@ export default function HomeProducts({ item, index }) {
       </TouchableOpacity>
     </Box>
   );
-}
+};
+
+export default HomeProducts;
 
 const styles = StyleSheet.create({
   productImage: {

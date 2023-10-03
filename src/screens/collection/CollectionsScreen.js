@@ -33,7 +33,8 @@ const CategorySection = () => {
   const firstItem = categories?.[0]?.parent_Id || null;
 
   useEffect(() => {
-    dispatch(getCollections('get-vtex-category-tree'));
+    // dispatch(getCollections('get-vtex-category-tree'));
+    dispatch(getCollections('sfcc/category-tree'));
   }, []);
 
   const handleItemPress = parent_Id => {
@@ -54,8 +55,7 @@ const CategorySection = () => {
         activeOpacity={0.8}
         onPress={() => {
           navigation.navigate('ProductsBySubCategory', {
-            parent_id: item?.Id,
-            title: item?.name,
+            item: item,
           });
         }}
         style={styles.subCategoryItem}
@@ -78,8 +78,7 @@ const CategorySection = () => {
     const onPressHeader = () => {
       if (item?.children?.length === 0) {
         navigation.navigate('ProductsByCategory', {
-          parent_id: item?.parent_Id,
-          title: item?.name,
+          item: item,
         });
       } else {
         handleItemPress(item?.parent_Id);

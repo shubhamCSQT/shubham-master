@@ -7,28 +7,25 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
 import { commonApi } from '@/api/CommanAPI';
 import { AuthContext } from '@/navigators/MainNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import CommonSolidButton from '../../components/CommonSolidButton/CommonSolidButton';
-import HomeHeader from '../home/homeHeader/HomeHeader';
 import SelectAuthMethod from './components/SelectAuthMethod';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
-import { useDispatch, useSelector } from 'react-redux';
-import CommonLoading from '@/components/CommonLoading';
-import axios from 'axios';
-import { applicationProperties } from '@/utils/application.properties';
+import { useDispatch } from 'react-redux';
 import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
+import SignUpScreen from './SignUpScreen';
+
 export default function LoginScreen(props) {
   const dispatch = useDispatch();
   const { signIn } = useContext(AuthContext);
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState('login');
-  const [userEmail, setUserEmail] = useState('tarundrupal@yopmail.com');
-  const [password, setPassword] = useState('Tarun@12');
+  const [userEmail, setUserEmail] = useState('div@gmail.com');
+  const [password, setPassword] = useState('Divyansh@123');
   const [isLoading, setIsLoading] = useState(false);
 
   const onPressLogin = async () => {
@@ -38,32 +35,45 @@ export default function LoginScreen(props) {
       email: userEmail,
       password: password,
     };
-    const response = await commonApi.post('login', apiData, {
+    const response = await commonApi.post('sfcc/login', apiData, {
       'Content-Type': 'Application/json',
     });
 
     if (response.data?.status === 200) {
-      await AsyncStorage.setItem(
-        'tokenExpiry',
-        response?.data?.data?.validation?.authCookie?.Value,
+      console.log('HERE');
+      // await AsyncStorage.setItem(
+      //   'tokenExpiry',
+      //   response?.data?.data?.validation?.authCookie?.Value,
+      // );
+      // var token = response?.data?.data?.validation?.authCookie?.Value;
+      var token = response?.data?.data?.bearerToken;
+      console.log(
+        'response?.data?.data?.first_name: ',
+        response?.data?.data?.first_name,
       );
-      var token = response?.data?.data?.validation?.authCookie?.Value;
+
       signIn(token);
+      Toast.show({
+        type: 'success',
+        text1: `Welcome ${response?.data?.data?.first_name || 'User'}!`,
+        text2: 'You are now logged in. 🎉',
+        position: 'top',
+      });
       // CommonLoading.hide();
-      dispatch(getCustomerDetails(`user-details/tarundrupal@yopmail.com`)).then(
-        res => {
-          Toast.show({
-            type: 'success',
-            text1: `Welcome ${res?.payload?.data?.userProfile?.email || ''}!`,
-            text2: 'You are now logged in. 🎉',
-            position: 'top',
-          });
-          navigation.navigate('PersonalDetailsScreen');
-          setIsLoading(false);
-        },
-      );
+      // dispatch(getCustomerDetails('user-details/tarundrupal@yopmail.com')).then(
+      //   res => {
+      //     Toast.show({
+      //       type: 'success',
+      //       text1: `Welcome ${res?.payload?.data?.userProfile?.email || ''}!`,
+      //       text2: 'You are now logged in. 🎉',
+      //       position: 'top',
+      //     });
+      //     navigation.navigate('PersonalDetailsScreen');
+      //     setIsLoading(false);
+      //   },
+      // );
     } else {
-      Alert.alert(`server error`);
+      Alert.alert('server error');
       setIsLoading(false);
       // CommonLoading.hide();
     }
@@ -103,7 +113,7 @@ export default function LoginScreen(props) {
             onPress={() => {
               navigation.goBack();
             }}
-          ></TouchableOpacity>
+          />
         </Box>
 
         <Box mt="s4">

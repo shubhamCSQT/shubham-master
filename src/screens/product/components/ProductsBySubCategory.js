@@ -15,21 +15,28 @@ const ProductsBySubCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
   const parent_id = props.route?.params.parent_id;
   const dispatch = useDispatch();
+
   const productsBySubCategory = useSelector(
     state =>
       state?.getProductsBySubCategoryApiSlice?.productsBySubCategory?.data ||
       [],
   );
 
+  const categoryId = props.route?.params?.item?.Id;
+  console.log('categoryId: ', categoryId);
+
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getproductsBySubCategory(`vtex-plp-by-subcategory/${parent_id}`))
+    dispatch(
+      getproductsBySubCategory(`sfcc/products-by-sub-category/${categoryId}`),
+    )
       .then(() => setIsLoading(false))
       .catch(error => {
         console.error('Error fetching products:', error);
         setIsLoading(false);
       });
-  }, [parent_id]);
+  }, [categoryId]);
+
   const renderItem = ({ item, index }) => (
     <>
       <SubCategoryProducts item={item} index={index} />
@@ -50,7 +57,8 @@ const ProductsBySubCategory = props => {
           <>
             {productsBySubCategory.length != 0 ? (
               <FlatList
-                data={productsBySubCategory}
+                // data={productsBySubCategory}
+                data={productsBySubCategory?.ProductData}
                 renderItem={renderItem}
                 numColumns={2}
                 contentContainerStyle={styles.productList}

@@ -1,48 +1,47 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
   FlatList,
   SafeAreaView,
-  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
 import CarouselCards from '@/components/imageCarousel/CarouselCards';
 import { theme } from '@/atoms';
 import { useDispatch, useSelector } from 'react-redux';
-import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsyncThunk';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const ProductDetailsScreen = props => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const productDetails = useSelector(
+    state => state.getProductDetailsApiSlice.productDetails?.data || [],
+  );
+
   const productId = props.route.params.product_id;
 
-  const navigation = useNavigation();
   const [selectedSkuId, setSelectedSkuId] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [imageCarousel, setImageCarousel] = useState([]);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [productImage, setProductImage] = useState('');
-  const dispatch = useDispatch();
+
+  const onPressAddToCart = () => {};
+
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getProductDetails(`get-vtex-product-by-id/${productId}`)).then(
-      () => {
-        setIsLoading(false);
-      },
-    );
+    dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
+      setIsLoading(false);
+    });
   }, [productId]);
-
-  const productDetails = useSelector(
-    state => state.getProductDetailsApiSlice.productDetails?.data || [],
-  );
 
   useEffect(() => {
     if (
@@ -55,8 +54,6 @@ const ProductDetailsScreen = props => {
       setImageCarousel(productDetails?.skus);
     }
   }, [productDetails, selectedVariantIndex]);
-
-  const onPressAddToCart = () => {};
 
   const Item = ({ item, onPress, backgroundColor, textColor, index }) => {
     return (

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Box } from '@/atoms';
 
 const CartScreen = () => {
   return (
-    <View>
+    <Box flex={1} backgroundColor="background">
       <Text>CartScreen</Text>
-    </View>
+    </Box>
   );
 };
 
