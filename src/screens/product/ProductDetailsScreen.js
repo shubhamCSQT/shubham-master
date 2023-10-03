@@ -19,21 +19,22 @@ import { theme } from '@/atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
+import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsyncThunk';
 const ProductDetailsScreen = props => {
   const { width } = useWindowDimensions();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const productName = props?.route?.params?.item?.product_name;
-  console.log('productName: ', productName);
+
   const productDetails = useSelector(
     state => state.getProductDetailsApiSlice.productDetails?.data || [],
   );
 
   const productId =
     props.route.params.item.ProductId || props.route.params.item.product_id;
-  console.log('props.route.params.item: ', props.route.params.item);
-  console.log('productId: ', productId);
+  const productName =
+    props?.route?.params?.item?.product_name ||
+    props?.route?.params?.item?.ProductName;
 
   const [selectedSkuId, setSelectedSkuId] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -44,12 +45,12 @@ const ProductDetailsScreen = props => {
 
   const onPressAddToCart = () => {};
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
-  //     setIsLoading(false);
-  //   });
-  // }, [productId]);
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
+      setIsLoading(false);
+    });
+  }, [productId]);
 
   useEffect(() => {
     if (

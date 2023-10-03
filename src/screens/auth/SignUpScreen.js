@@ -7,10 +7,9 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { Box, FONT, Text, theme } from '@atoms';
-import CommonChipSelector from '../../components/CommonChipSelector/CommonChipSelector';
-import CommonSolidButton from '../../components/CommonSolidButton/CommonSolidButton';
+import CommonChipSelector from '@/components/CommonChipSelector/CommonChipSelector';
+import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 
-import { api } from '../../api/SecureAPI';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const SignUpScreen = ({ setSelectedOption }) => {

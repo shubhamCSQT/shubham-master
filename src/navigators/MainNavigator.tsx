@@ -6,7 +6,6 @@ import ProductDetailsScreen from '@/screens/product/ProductDetailsScreen';
 import CollectionScreen from '@/screens/collection/CollectionsScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 import ProductsByCategory from '@/screens/product/components/ProductsByCategory';
-import ProductsBySubCategory from '@/screens/product/components/ProductsBySubCategory';
 import LoginScreen from '@/screens/auth/LoginScreen';
 import PersonalDetailsScreen from '@/screens/profile/PersonalDetailsScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,12 +16,18 @@ import RNRestart from 'react-native-restart';
 import SignUpScreen from '@/screens/auth/SignUpScreen';
 import CartScreen from '@/screens/cart/CartScreen';
 import { reduxStorage } from '@/store';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import { useDispatch,useSelector } from 'react-redux';
+import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
+import { customerId } from '@/utils/appUtils';
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext({});
 
 // @refresh reset
 const MainNavigator = () => {
+  const { isUserLoggedIn } = useIsUserLoggedIn();
+  const reduxDispatch = useDispatch();
   const [state, dispatch] = useReducer(
     (prevState: any, action: { type: any; token: any }) => {
       switch (action.type) {
@@ -119,6 +124,19 @@ const MainNavigator = () => {
     };
     getTokenExpiry();
   }, [authContext]);
+
+
+  const customerBasket = useSelector(
+    state => state.getCustomerBasketApiSlice.customerBasket?.data || [],
+  );
+    console.log('customerBasket: ', customerBasket);
+
+  useEffect(()=>{
+    console.log('isUserLoggedIn: ', isUserLoggedIn);
+  if(isUserLoggedIn){
+    reduxDispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+  }
+  },[isUserLoggedIn])
 
   return (
     <AuthContext.Provider value={authContext}>

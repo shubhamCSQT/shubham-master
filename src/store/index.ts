@@ -23,9 +23,11 @@ import getBestSellingsApiSlice from '../redux/bestSellingProductApi/BestSellingP
 import getCollectionsApiSlice from '../redux/collectionsApi/CollectionsApiSlice';
 import getProductsBySubCategoryApiSlice from '../redux/productsBySubCategory/SubCategoryProductsApiSlice';
 import getCustomerDetailsApiSlice from '../redux/profileApi/ProfileApiSlice';
+import getCustomerBasketApiSlice from '../redux/basket/BasketApiSlice';
 const reducers = combineReducers({
   theme,
   getCustomerDetailsApiSlice,
+  getCustomerBasketApiSlice,
   getProductsByCategoryApiSlice,
   getProductDetailsApiSlice,
   getNewArrivalApiSlice,
