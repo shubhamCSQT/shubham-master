@@ -21,7 +21,7 @@ import getProductDetailsApiSlice from '../redux/productDetails/ProductDetailsApi
 import getNewArrivalApiSlice from '../redux/newArrivalApi/NewArrivalApiSlice';
 import getBestSellingsApiSlice from '../redux/bestSellingProductApi/BestSellingProductApiSlice';
 import getCollectionsApiSlice from '../redux/collectionsApi/CollectionsApiSlice';
-import getProductsBySubCategoryApiSlice from '../redux/productsBySubCategory/SubCategoryProductsApiSlice'
+import getProductsBySubCategoryApiSlice from '../redux/productsBySubCategory/SubCategoryProductsApiSlice';
 import getCustomerDetailsApiSlice from '../redux/profileApi/ProfileApiSlice';
 const reducers = combineReducers({
   theme,
@@ -34,7 +34,8 @@ const reducers = combineReducers({
   getProductsBySubCategoryApiSlice,
   [api.reducerPath]: api.reducer,
 });
-const storage = new MMKV();
+export const storage = new MMKV();
+
 export const reduxStorage: Storage = {
   setItem: (key, value) => {
     storage.set(key, value);
@@ -74,7 +75,7 @@ const store = configureStore({
 
   //   return middlewares;
   // },
-  middleware:[thunkMiddleware]
+  middleware: [thunkMiddleware],
 });
 
 const persistor = persistStore(store);

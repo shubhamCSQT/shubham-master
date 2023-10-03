@@ -15,6 +15,8 @@ import * as Keychain from 'react-native-keychain';
 import { Alert } from 'react-native';
 import RNRestart from 'react-native-restart';
 import SignUpScreen from '@/screens/auth/SignUpScreen';
+import CartScreen from '@/screens/cart/CartScreen';
+import { reduxStorage } from '@/store';
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext({});
@@ -60,6 +62,7 @@ const MainNavigator = () => {
       signOut: async () => {
         await Keychain.resetGenericPassword();
         AsyncStorage.removeItem('tokenExpiry');
+        reduxStorage.removeItem('customerId');
         RNRestart.Restart();
         dispatch({
           type: 'SIGN_OUT',
@@ -144,6 +147,7 @@ const MainNavigator = () => {
           name="PersonalDetailsScreen"
           component={PersonalDetailsScreen}
         />
+        <Stack.Screen name="CartScreen" component={CartScreen} />
       </Stack.Navigator>
     </AuthContext.Provider>
   );

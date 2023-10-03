@@ -1,15 +1,10 @@
-import { Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
-import Icons from '@/assets/constants/Icons';
-import { useDispatch } from 'react-redux';
 
-const HomeProducts = ({ item, index }) => {
-  console.log('abc');
+const HomeProducts = React.memo(({ item }) => {
   const navigation = useNavigation();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Box
@@ -77,7 +72,7 @@ const HomeProducts = ({ item, index }) => {
       </TouchableOpacity>
     </Box>
   );
-};
+});
 
 export default HomeProducts;
 

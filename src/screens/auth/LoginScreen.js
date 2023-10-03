@@ -18,6 +18,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useDispatch } from 'react-redux';
 import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
 import SignUpScreen from './SignUpScreen';
+import { reduxStorage } from '@/store';
 
 export default function LoginScreen(props) {
   const dispatch = useDispatch();
@@ -47,10 +48,8 @@ export default function LoginScreen(props) {
       // );
       // var token = response?.data?.data?.validation?.authCookie?.Value;
       var token = response?.data?.data?.bearerToken;
-      console.log(
-        'response?.data?.data?.first_name: ',
-        response?.data?.data?.first_name,
-      );
+      const customerId = response?.data?.data?.customer_id;
+      reduxStorage.setItem('customerId', customerId);
 
       signIn(token);
       Toast.show({

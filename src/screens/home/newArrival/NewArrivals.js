@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { StyleSheet, FlatList } from 'react-native';
 import { Box, Text, theme } from '@atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewArrival } from '@/redux/newArrivalApi/NewArrivalApiAsyncThunk';
@@ -12,7 +12,12 @@ const NewArrivals = () => {
     state => state?.getNewArrivalApiSlice?.newArrivals?.data || [],
   );
 
-  const renderItem = ({ item, index }) => <HomeProducts item={item} />;
+  // const renderItem = ({ item, index }) => <HomeProducts item={item} />;
+
+  const renderItem = useCallback(({ item }) => {
+    // render logic
+    return <HomeProducts item={item} />;
+  }, []);
 
   useEffect(() => {
     dispatch(getNewArrival('sfcc/new-arrivals'));
@@ -31,7 +36,8 @@ const NewArrivals = () => {
         <FlatList
           data={newArrivals}
           renderItem={renderItem}
-          key={Math.random()}
+          // key={Math.random()}
+          keyExtractor={item => item?.skuId?.toString()}
           numColumns={2}
           contentContainerStyle={styles.productList}
         />

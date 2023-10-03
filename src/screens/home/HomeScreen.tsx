@@ -20,8 +20,8 @@ const HomeScreen = () => {
         return <ContentFullSection />;
       case 'NewArrival':
         return <NewArrivals />;
-      case 'BestSelling':
-        return <BestSellingProducts />;
+      // case 'BestSelling':
+      //   return <BestSellingProducts />;
       default:
         return <></>;
     }

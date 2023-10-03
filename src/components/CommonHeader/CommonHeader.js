@@ -32,7 +32,7 @@ const CommonHeader = ({
 
   const onPressCart = () => {
     // goToCart();
-    // navigation.navigate('CartScreen');
+    navigation.navigate('CartScreen');
   };
 
   return (

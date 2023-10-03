@@ -5,10 +5,15 @@ import { useNavigation } from '@react-navigation/native';
 import LoginScreen from '../auth/LoginScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import { reduxStorage, storage } from '@/store';
+
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const { isUserLoggedIn } = useIsUserLoggedIn();
+
+  const customerId = storage.getString('customerId');
+  console.log('customerId: ', customerId);
 
   const dataArray = [
     {
