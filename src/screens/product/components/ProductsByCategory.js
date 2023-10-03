@@ -4,7 +4,6 @@ import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
 import { theme } from '../../../atoms/theme';
 import { Box, Text } from '@/atoms';
-import { commonApi } from '@/api/CommanAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductsApiAsyncThunk } from '@/redux/productsApi/ProductsApiAsyncThunk';
 import ProductItem from '@/components/product/ProductItem';
@@ -12,19 +11,23 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const parent_id = props.route?.params.item.parent_id;
   const categoryId = props.route?.params?.item?.Id;
+  const isCategoryTrue = props.route?.params?.isCategoryTrue;
+  const categoryEndPoint = isCategoryTrue
+    ? 'products-by-category'
+    : 'products-by-sub-category';
 
   const dispatch = useDispatch();
 
   const productsByCategory = useSelector(
     state =>
       state?.getProductsByCategoryApiSlice?.productsByCategory?.data
-        ?.productData || [],
+        ?.ProductData || [],
   );
+
   useEffect(() => {
     setIsLoading(true);
-    dispatch(ProductsApiAsyncThunk(`sfcc/products-by-category/${categoryId}`))
+    dispatch(ProductsApiAsyncThunk(`sfcc/${categoryEndPoint}/${categoryId}`))
       .then(() => setIsLoading(false))
       .catch(error => {
         console.error('Error fetching products:', error);

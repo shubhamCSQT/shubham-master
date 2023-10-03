@@ -9,6 +9,8 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
 import CarouselCards from '@/components/imageCarousel/CarouselCards';
@@ -18,14 +20,16 @@ import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsync
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const ProductDetailsScreen = props => {
+  // console.log('props: ',);
+  const { width } = useWindowDimensions();
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
+  const productName = props?.route?.params?.product?.product_name;
   const productDetails = useSelector(
     state => state.getProductDetailsApiSlice.productDetails?.data || [],
   );
-
-  const productId = props.route.params.product_id;
+  const productId = props.route.params.product?.product_id;
 
   const [selectedSkuId, setSelectedSkuId] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -56,8 +60,10 @@ const ProductDetailsScreen = props => {
   }, [productDetails, selectedVariantIndex]);
 
   const Item = ({ item, onPress, backgroundColor, textColor, index }) => {
+    const itemWidth = width / 4; // Half of the screen width
+
     return (
-      <Box>
+      <Box style={{ flexDirection: 'column', width: itemWidth, flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
             setSelectedSkuId(item?.sku);
@@ -65,9 +71,7 @@ const ProductDetailsScreen = props => {
           }}
           style={[styles.item, { backgroundColor }]}
         >
-          <Text style={[styles.title, { color: textColor }]}>
-            {item?.specifications?.Color}
-          </Text>
+          <Text style={[styles.title, { color: textColor }]}>{item?.sku}</Text>
         </TouchableOpacity>
       </Box>
     );
@@ -94,7 +98,7 @@ const ProductDetailsScreen = props => {
 
   return (
     <>
-      <CommonHeader title={'product'} searchIcon={true} showCartIcon={true} />
+      <CommonHeader title={productName} searchIcon={true} showCartIcon={true} />
       <SafeAreaView style={styles.container}>
         {isLoading ? (
           <ActivityIndicator color={theme.colors.sushiittoRed} />
@@ -117,33 +121,41 @@ const ProductDetailsScreen = props => {
                 /> */}
                   <CarouselCards images={imageCarousel} crosSelling={null} />
                   <Box>
-                    <Text variant="regular18">{productDetails.name}</Text>
-                    <Text variant="regular18">
+                    <Text variant="bold24">{productDetails.name}</Text>
+                    <Text variant="bold16" mt="s6">
                       ${productDetails?.skus?.[0]?.bestPrice}
                     </Text>
-                    {productDetails?.skus?.[0]?.available ? (
-                      <Text variant="regular18" color="green">
-                        Available
-                      </Text>
-                    ) : (
-                      <Text variant="regular18" color="red">
-                        Not Available
-                      </Text>
-                    )}
+                    <Box mt="s6">
+                      {productDetails?.skus?.[0]?.available ? (
+                        <Text variant="bold16" color="green">
+                          Available
+                        </Text>
+                      ) : (
+                        <Text variant="regular18" color="red">
+                          Not Available
+                        </Text>
+                      )}
+                    </Box>
                     <Box>
                       {productDetails?.skus?.length >= 1 && (
                         <Box>
-                          <Text variant="bold16" mt="s4">
+                          <Text variant="bold16" mt="s8">
                             Choose Variation :{' '}
                           </Text>
-                          <FlatList
-                            data={productDetails?.skus}
-                            renderItem={({ item, index }) =>
-                              renderItem({ item, index })
-                            }
-                            keyExtractor={(item, index) => index.toString()}
-                            contentContainerStyle={styles.productList}
-                          />
+                          <Box style={{ flex: 1 }}>
+                            <FlatList
+                              data={productDetails?.skus}
+                              renderItem={({ item, index }) =>
+                                renderItem({ item, index })
+                              }
+                              keyExtractor={(item, index) => index.toString()}
+                              contentContainerStyle={{
+                                flexDirection: 'row', // Horizontal layout
+                                flexWrap: 'wrap', // Wrap to the next line when screen width is exceeded
+                              }}
+                              // horizontal={true}
+                            />
+                          </Box>
                         </Box>
                       )}
                     </Box>
@@ -180,7 +192,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productList: {
-    paddingHorizontal: 16,
+    flexDirection: 'row', // Horizontal layout
+    flexWrap: 'wrap',
   },
 
   backImage: {
@@ -194,6 +207,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: theme.colors.border,
+    width: '100',
   },
   title: {
     fontSize: 14,

@@ -129,10 +129,6 @@ const MainNavigator = () => {
           component={ProductsByCategory}
         />
         <Stack.Screen
-          name="ProductsBySubCategory"
-          component={ProductsBySubCategory}
-        />
-        <Stack.Screen
           name="ProductDetailsScreen"
           component={ProductDetailsScreen}
         />

@@ -5,7 +5,7 @@ export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
 export const CarouselCardItem = ({ item, index }) => {
   return (
     <Box style={styles.container} key={index}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image source={{ uri: item.images?.image1 }} style={styles.image} />
     </Box>
   );
 };

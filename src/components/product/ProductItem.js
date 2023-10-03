@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 export default function ProductItem({ item, index }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -25,7 +24,7 @@ export default function ProductItem({ item, index }) {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ProductDetailsScreen', {
-            product_id: item?.product_id,
+            product: item,
           });
         }}
       >
@@ -46,7 +45,7 @@ export default function ProductItem({ item, index }) {
         >
           <Box>
             <Text fontSize={14} fontWeight="600">
-              $ {item?.product_price?.sellingPrice}
+              $ {item?.product_price?.listPrice}
             </Text>
           </Box>
           <TouchableOpacity>
@@ -61,7 +60,6 @@ export default function ProductItem({ item, index }) {
               <Text
                 fontSize={14}
                 color="white"
-                // fontWeight="600"
                 variant="bold16"
                 marginRight="s4"
               >

@@ -6,20 +6,16 @@ import data from './data';
 import { Box } from '@/atoms';
 import { CarouselCrossSellingProducts } from './CarouselCrossSellingProducts';
 const CarouselCards = ({ images, crosSelling }) => {
-  console.log('images: ', images);
   const [index, setIndex] = React.useState(0);
   const isCarousel = React.useRef(null);
-
   return (
     <Box alignItems="center">
       <Carousel
         layout="tinder"
         layoutCardOffset={9}
         ref={isCarousel}
-        data={images?.images}
-        renderItem={
-          !crosSelling ? CarouselCardItem : CarouselCrossSellingProducts
-        }
+        data={images}
+        renderItem={CarouselCardItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         onSnapToItem={index => setIndex(index)}
