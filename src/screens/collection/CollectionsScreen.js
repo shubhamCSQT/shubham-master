@@ -49,7 +49,6 @@ const CategorySection = () => {
   }, [firstItem]);
 
   const renderSubCategory = ({ item }) => {
-    // console.log('item: ', item);
     return (
       <TouchableOpacity
         activeOpacity={0.8}

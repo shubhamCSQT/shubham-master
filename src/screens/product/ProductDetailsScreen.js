@@ -22,7 +22,6 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const ProductDetailsScreen = props => {
   const productId = props.route.params.product_id;
-  console.log('productId: ', productId);
 
   const navigation = useNavigation();
   const [selectedSkuId, setSelectedSkuId] = useState();

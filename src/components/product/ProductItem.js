@@ -6,7 +6,6 @@ import Icons from '@/assets/constants/Icons';
 import { useDispatch } from 'react-redux';
 
 export default function ProductItem({ item, index }) {
-  console.log('item: ', item.product_image);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 

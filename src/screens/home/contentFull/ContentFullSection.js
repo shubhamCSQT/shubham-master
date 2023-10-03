@@ -103,8 +103,6 @@ const ContentFullSection = () => {
     try {
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log('data: ', data);
-      console.log('data: ', data?.data?.sushiittoHomeContentCollection);
       setCmsData(data?.data?.sushiittoHomeContentCollection);
       // setCmsData(data.data);
       // Process the response data as per your requirements
