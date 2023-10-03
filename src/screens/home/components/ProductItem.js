@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
 
-const HomeProducts = React.memo(({ item }) => {
+const ProductItem = React.memo(({ item }) => {
   const navigation = useNavigation();
 
   return (
@@ -20,7 +20,7 @@ const HomeProducts = React.memo(({ item }) => {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ProductDetailsScreen', {
-            product_id: item?.ProductId,
+            item: item,
           });
         }}
       >
@@ -74,7 +74,7 @@ const HomeProducts = React.memo(({ item }) => {
   );
 });
 
-export default HomeProducts;
+export default ProductItem;
 
 const styles = StyleSheet.create({
   productImage: {

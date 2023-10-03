@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
@@ -19,17 +20,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsyncThunk';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 const ProductDetailsScreen = props => {
-  // console.log('props: ',);
   const { width } = useWindowDimensions();
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const productName = props?.route?.params?.product?.product_name;
+  const productName = props?.route?.params?.item?.product_name;
+  console.log('productName: ', productName);
   const productDetails = useSelector(
     state => state.getProductDetailsApiSlice.productDetails?.data || [],
   );
-  const productId = props.route.params.product?.product_id;
+
+  const productId =
+    props.route.params.item.ProductId || props.route.params.item.product_id;
+  console.log('props.route.params.item: ', props.route.params.item);
+  console.log('productId: ', productId);
 
   const [selectedSkuId, setSelectedSkuId] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,12 +46,12 @@ const ProductDetailsScreen = props => {
 
   const onPressAddToCart = () => {};
 
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
-      setIsLoading(false);
-    });
-  }, [productId]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
+  //     setIsLoading(false);
+  //   });
+  // }, [productId]);
 
   useEffect(() => {
     if (
@@ -60,10 +66,10 @@ const ProductDetailsScreen = props => {
   }, [productDetails, selectedVariantIndex]);
 
   const Item = ({ item, onPress, backgroundColor, textColor, index }) => {
-    const itemWidth = width / 4; // Half of the screen width
+    const itemWidth = width / 4;
 
     return (
-      <Box style={{ flexDirection: 'column', width: itemWidth, flex: 1 }}>
+      <Box style={{ width: itemWidth }}>
         <TouchableOpacity
           onPress={() => {
             setSelectedSkuId(item?.sku);
@@ -136,24 +142,25 @@ const ProductDetailsScreen = props => {
                         </Text>
                       )}
                     </Box>
-                    <Box>
+                    <Box flex={1}>
                       {productDetails?.skus?.length >= 1 && (
-                        <Box>
+                        <Box flex={1}>
                           <Text variant="bold16" mt="s8">
                             Choose Variation :{' '}
                           </Text>
                           <Box style={{ flex: 1 }}>
                             <FlatList
                               data={productDetails?.skus}
-                              renderItem={({ item, index }) =>
-                                renderItem({ item, index })
-                              }
+                              renderItem={renderItem}
                               keyExtractor={(item, index) => index.toString()}
                               contentContainerStyle={{
-                                flexDirection: 'row', // Horizontal layout
-                                flexWrap: 'wrap', // Wrap to the next line when screen width is exceeded
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                flexBasis: 1,
+                                justifyContent: 'space-between',
+                                paddingHorizontal: 4,
                               }}
-                              // horizontal={true}
+                              // numColumns={3}
                             />
                           </Box>
                         </Box>
@@ -207,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: theme.colors.border,
-    width: '100',
+    width: 100,
   },
   title: {
     fontSize: 14,

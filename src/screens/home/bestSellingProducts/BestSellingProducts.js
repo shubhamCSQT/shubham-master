@@ -4,7 +4,7 @@ import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { Box, Text, theme } from '@/atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBestSellings } from '@/redux/bestSellingProductApi/BestSellingProductApiAsyncThunk';
-import HomeProducts from '../components/HomeProducts';
+import ProductItem from '../components/ProductItem';
 const BestSellingProducts = () => {
   const dispatch = useDispatch();
   const bestSellings = useSelector(
@@ -14,7 +14,7 @@ const BestSellingProducts = () => {
   useEffect(() => {
     dispatch(getBestSellings('sfcc/best-selling-products'));
   }, []);
-  const renderItem = ({ item, index }) => <HomeProducts item={item} />;
+  const renderItem = ({ item, index }) => <ProductItem item={item} />;
   return (
     <Box style={styles.container}>
       {/* <CommonHeader title={title || 'All Products'} showCartIcon /> */}

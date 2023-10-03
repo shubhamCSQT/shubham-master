@@ -4,7 +4,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Box, Text, theme } from '@atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewArrival } from '@/redux/newArrivalApi/NewArrivalApiAsyncThunk';
-import HomeProducts from '../components/HomeProducts';
+import ProductItem from '../components/ProductItem';
 const NewArrivals = () => {
   const dispatch = useDispatch();
 
@@ -12,11 +12,11 @@ const NewArrivals = () => {
     state => state?.getNewArrivalApiSlice?.newArrivals?.data || [],
   );
 
-  // const renderItem = ({ item, index }) => <HomeProducts item={item} />;
+  // const renderItem = ({ item, index }) => <ProductItem item={item} />;
 
   const renderItem = useCallback(({ item }) => {
     // render logic
-    return <HomeProducts item={item} />;
+    return <ProductItem item={item} />;
   }, []);
 
   useEffect(() => {

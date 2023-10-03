@@ -24,7 +24,7 @@ export default function ProductItem({ item, index }) {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ProductDetailsScreen', {
-            product: item,
+            item: item,
           });
         }}
       >
