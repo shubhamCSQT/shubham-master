@@ -30,7 +30,7 @@ const CategorySection = () => {
   const categories = useSelector(
     state => state?.getCollectionsApiSlice?.collections?.data || [],
   );
-  const firstItem = categories?.[0]?.parent_Id || null;
+  const firstItem = categories?.[0]?.Id || null;
 
   useEffect(() => {
     // dispatch(getCollections('get-vtex-category-tree'));
@@ -38,6 +38,7 @@ const CategorySection = () => {
   }, []);
 
   const handleItemPress = parent_Id => {
+    console.log('parent_Id: ', parent_Id);
     setExpandedItem(expandedItem === parent_Id ? null : parent_Id);
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
@@ -50,12 +51,14 @@ const CategorySection = () => {
   }, [firstItem]);
 
   const renderSubCategory = ({ item }) => {
+    console.log('item: ', item);
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => {
-          navigation.navigate('ProductsBySubCategory', {
+          navigation.navigate('ProductsByCategory', {
             item: item,
+            isSubCategoryTrue: true,
           });
         }}
         style={styles.subCategoryItem}
@@ -79,9 +82,10 @@ const CategorySection = () => {
       if (item?.children?.length === 0) {
         navigation.navigate('ProductsByCategory', {
           item: item,
+          isCategoryTrue: true,
         });
       } else {
-        handleItemPress(item?.parent_Id);
+        handleItemPress(item?.Id);
       }
     };
 
@@ -103,10 +107,10 @@ const CategorySection = () => {
                 <></>
               )}
             </Text>
-            <Text>{expandedItem === item.parent_Id ? '-' : '+'}</Text>
+            <Text>{expandedItem === item.Id ? '-' : '+'}</Text>
           </View>
 
-          {expandedItem === item.parent_Id && (
+          {expandedItem === item.Id && (
             <>
               <Animated.View style={[styles.expandedView, { expandStyle }]}>
                 <FlatList
@@ -126,7 +130,7 @@ const CategorySection = () => {
   return (
     <>
       <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} />
-      <Box flex={1} paddingHorizontal="paddingHorizontal">
+      <Box flex={1} paddingHorizontal="paddingHorizontal" mt="s8">
         <FlatList
           data={categories}
           renderItem={renderCategory}
