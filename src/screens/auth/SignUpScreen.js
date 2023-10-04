@@ -12,7 +12,7 @@ import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton'
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const SignUpScreen = ({ setSelectedOption }) => {
+const SignUpScreen = () => {
   const [signUpApiResponse, setSignUpApiResponse] = useState([]);
 
   // GENDER
@@ -132,27 +132,7 @@ const SignUpScreen = ({ setSelectedOption }) => {
     },
   };
 
-  const onPressSignUp = async () => {
-    await api.post('customers', apiData).then(response => {
-      if (response.data.status === 201) {
-        setSignUpApiResponse(response.data?.data);
-        Alert.alert(
-          'Almost there!',
-          'We sent you an email to validate your email address. Please confirm it to be able to log in.',
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                setSelectedOption('login');
-              },
-            },
-          ],
-        );
-      } else {
-        Alert.alert(response.data?.data?.errors?.[0]?.detail);
-      }
-    });
-  };
+  const onPressSignUp = async () => {};
 
   return (
     <Box flex={1} backgroundColor="white">

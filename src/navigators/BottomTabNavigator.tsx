@@ -10,30 +10,13 @@ import Icons from '../assets/constants/Icons';
 import CollectionScreen from '@/screens/collection/CollectionsScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 import { theme } from '@/atoms';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import { BottomTabIcon } from '@/components/bottomTabIcon/BottomTabIcon';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const Icon = ({
-    source,
-    focused,
-    color,
-  }: {
-    source: any;
-    focused: boolean;
-    color: string;
-  }) => {
-    return (
-      <Image
-        source={source}
-        style={{
-          width: 24,
-          height: 24,
-          tintColor: focused ? '#4486c6' : color,
-        }}
-      />
-    );
-  };
+  const { isUserLoggedIn } = useIsUserLoggedIn();
 
   return (
     <Tab.Navigator
@@ -50,7 +33,11 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ focused, color }) => {
             return (
-              <Icon source={Icons.homeIcon} focused={focused} color={color} />
+              <BottomTabIcon
+                source={Icons.homeIcon}
+                focused={focused}
+                color={color}
+              />
             );
           },
         }}
@@ -60,7 +47,11 @@ export default function BottomTabNavigator() {
         component={CartScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (
-            <Icon source={Icons.cartIcon} focused={focused} color={color} />
+            <BottomTabIcon
+              source={Icons.cartIcon}
+              focused={focused}
+              color={color}
+            />
           ),
         }}
       />
@@ -69,7 +60,11 @@ export default function BottomTabNavigator() {
         component={CollectionsScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (
-            <Icon source={Icons.cartIcon} focused={focused} color={color} />
+            <BottomTabIcon
+              source={Icons.cartIcon}
+              focused={focused}
+              color={color}
+            />
           ),
         }}
       />
@@ -78,7 +73,11 @@ export default function BottomTabNavigator() {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (
-            <Icon source={Icons.profileIcon} focused={focused} color={color} />
+            <BottomTabIcon
+              source={Icons.profileIcon}
+              focused={focused}
+              color={color}
+            />
           ),
         }}
       />

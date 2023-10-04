@@ -1,33 +1,23 @@
 import React, { useEffect, useMemo, useReducer } from 'react';
-import { Example } from '../screens';
 import { createStackNavigator } from '@react-navigation/stack';
-import BottomTabNavigator from './BottomTabNavigator';
-import ProductDetailsScreen from '@/screens/product/ProductDetailsScreen';
-import CollectionScreen from '@/screens/collection/CollectionsScreen';
-import CollectionsScreen from '@/screens/collection/CollectionsScreen';
-import ProductsByCategory from '@/screens/product/components/ProductsByCategory';
-import LoginScreen from '@/screens/auth/LoginScreen';
-import PersonalDetailsScreen from '@/screens/profile/PersonalDetailsScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from 'jwt-decode';
 import * as Keychain from 'react-native-keychain';
 import { Alert } from 'react-native';
 import RNRestart from 'react-native-restart';
-import SignUpScreen from '@/screens/auth/SignUpScreen';
-import CartScreen from '@/screens/cart/CartScreen';
 import { reduxStorage } from '@/store';
-import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
-import { useDispatch,useSelector } from 'react-redux';
-import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
-import { customerId } from '@/utils/appUtils';
+import { useDispatch } from 'react-redux';
+import SplashScreen from '@/components/SplashScreen/SplashScreen';
+import AuthNavigator from './AuthNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext({});
 
 // @refresh reset
 const MainNavigator = () => {
-  const { isUserLoggedIn } = useIsUserLoggedIn();
   const reduxDispatch = useDispatch();
+
   const [state, dispatch] = useReducer(
     (prevState: any, action: { type: any; token: any }) => {
       switch (action.type) {
@@ -125,43 +115,35 @@ const MainNavigator = () => {
     getTokenExpiry();
   }, [authContext]);
 
+  // const customerBasket = useSelector(
+  //   state => state.getCustomerBasketApiSlice.customerBasket?.data || [],
+  // );
+  // console.log('customerBasket: ', customerBasket);
 
-  const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice?.data || [],
-  );
-    console.log('customerBasket: ', customerBasket);
+  // useEffect(() => {
+  //   console.log('isUserLoggedIn: ', isUserLoggedIn);
+  //   if (isUserLoggedIn) {
+  //     reduxDispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+  //   }
+  // }, [isUserLoggedIn]);
 
-  useEffect(()=>{
-  if(state){
-    reduxDispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+  if (state.isLoading) {
+    return <SplashScreen />;
   }
-  
-  },[isUserLoggedIn])
 
   return (
     <AuthContext.Provider value={authContext}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
-        <Stack.Screen
-          name="ProductsByCategory"
-          component={ProductsByCategory}
-        />
-        <Stack.Screen
-          name="ProductDetailsScreen"
-          component={ProductDetailsScreen}
-        />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Stack.Screen name="CollectionsScreen" component={CollectionsScreen} />
         {state.userToken == null ? (
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
         ) : (
-          <></>
+          <>
+            <Stack.Screen
+              name="HomeStackNavigator"
+              component={HomeStackNavigator}
+            />
+          </>
         )}
-        <Stack.Screen
-          name="PersonalDetailsScreen"
-          component={PersonalDetailsScreen}
-        />
-        <Stack.Screen name="CartScreen" component={CartScreen} />
       </Stack.Navigator>
     </AuthContext.Provider>
   );

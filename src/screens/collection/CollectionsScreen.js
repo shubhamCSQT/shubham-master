@@ -16,7 +16,7 @@ import { getCollections } from '@/redux/collectionsApi/CollectionsApiAsyncThunk'
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import { SearchIcon } from '@/assets/svgs';
 
-const CategorySection = () => {
+const CollectionsScreen = () => {
   const navigation = useNavigation();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -187,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategorySection;
+export default CollectionsScreen;
