@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React,{useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
@@ -12,7 +12,7 @@ import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 import { theme } from '@/atoms';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import { BottomTabIcon } from '@/components/bottomTabIcon/BottomTabIcon';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
 const Tab = createBottomTabNavigator();
@@ -27,6 +27,7 @@ export default function BottomTabNavigator() {
   );
   console.log('customerBasket: ', customerBasket);
 
+  console.log('customerId: ', customerId);
   useEffect(() => {
     if (isUserLoggedIn) {
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));

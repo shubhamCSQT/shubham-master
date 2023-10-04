@@ -115,8 +115,6 @@ const MainNavigator = () => {
     getTokenExpiry();
   }, [authContext]);
 
-  
-
   if (state.isLoading) {
     return <SplashScreen />;
   }

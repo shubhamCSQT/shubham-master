@@ -12,7 +12,7 @@ const get = async (endPoint, data, loading) => {
   try {
     let response = await axios.get(applicationProperties.baseUrl + endPoint, {
       headers: {
-        Authorization: token,
+        bearer: token,
       },
       validateStatus: () => true,
       withCredentials: true,
