@@ -15,7 +15,7 @@ const getCustomerBasketApiSlice = createSlice({
     });
     builder.addCase(getCustomerBasketApi.fulfilled, (state, action) => {
       state.status = 'success';
-      state.bestSellings = action.payload;
+      state.customerBasket = action.payload;
     });
     builder.addCase(getCustomerBasketApi.rejected, (state, action) => {
       state.status = 'rejected';

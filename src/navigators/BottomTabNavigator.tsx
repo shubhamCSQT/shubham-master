@@ -15,6 +15,7 @@ import { BottomTabIcon } from '@/components/bottomTabIcon/BottomTabIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
+import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
@@ -23,14 +24,15 @@ export default function BottomTabNavigator() {
   const dispatch = useDispatch();
 
   const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice.customerBasket?.data || [],
+    state => state.getCustomerBasketApiSlice?.customerBasket?.data || [],
   );
-  console.log('customerBasket: ', customerBasket);
 
-  console.log('customerId: ', customerId);
   useEffect(() => {
     if (isUserLoggedIn) {
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+    }
+    if(customerBasket?.total===0){
+       dispatch(createCustomerBasket(`sfcc/createCart`));
     }
   }, [isUserLoggedIn]);
 

@@ -9,8 +9,10 @@ import {
   ActivityIndicator,
   FlatList,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { useWindowDimensions } from 'react-native';
+import * as Keychain from 'react-native-keychain';
 
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
@@ -20,14 +22,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsyncThunk';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import axios from 'axios';
+import { applicationProperties } from '@/utils/application.properties';
 const ProductDetailsScreen = props => {
   const { width } = useWindowDimensions();
-
+  const { isUserLoggedIn } = useIsUserLoggedIn();
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const productDetails = useSelector(
     state => state.getProductDetailsApiSlice.productDetails?.data || [],
+  );
+
+  const basketId = useSelector(
+    state =>
+      state.getCustomerBasketApiSlice.customerBasket?.data?.baskets[0]
+        ?.basket_id || [],
   );
 
   const productId =
@@ -43,7 +54,39 @@ const ProductDetailsScreen = props => {
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [productImage, setProductImage] = useState('');
 
-  const onPressAddToCart = () => {};
+  const onPressAddToCart = () => {
+    setIsLoadingAddToCart(true);
+    if (isUserLoggedIn) {
+      const addToCart = async () => {
+        userToken = await Keychain.getGenericPassword();
+        setIsLoadingAddToCart(false);
+
+        let response = await axios.post(
+          applicationProperties.baseUrl + `sfcc/add-items/${basketId}`,
+          {
+            product_id: selectedSkuId,
+            quantity: 1,
+          },
+          {
+            headers: {
+              token: userToken.password,
+            },
+            validateStatus: () => true,
+            withCredentials: true,
+          },
+        );
+        if (response.status == 200) {
+          setIsLoadingAddToCart(false);
+          Alert.alert('Product Added to cart');
+        } else {
+          setIsLoadingAddToCart(false);
+
+          Alert.alert('Something went wrong');
+        }
+      };
+      addToCart();
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);

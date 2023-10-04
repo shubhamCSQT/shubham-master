@@ -85,7 +85,7 @@ const CollectionsScreen = () => {
           isCategoryTrue: true,
         });
       } else {
-        handleItemPress(item?.Id);
+        handleItemPress(item?.parent_Id);
       }
     };
 
@@ -107,10 +107,10 @@ const CollectionsScreen = () => {
                 <></>
               )}
             </Text>
-            <Text>{expandedItem === item.Id ? '-' : '+'}</Text>
+            <Text>{expandedItem === item.parent_Id ? '-' : '+'}</Text>
           </View>
 
-          {expandedItem === item.Id && (
+          {expandedItem === item.parent_Id && (
             <>
               <Animated.View style={[styles.expandedView, { expandStyle }]}>
                 <FlatList
