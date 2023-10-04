@@ -115,17 +115,7 @@ const MainNavigator = () => {
     getTokenExpiry();
   }, [authContext]);
 
-  // const customerBasket = useSelector(
-  //   state => state.getCustomerBasketApiSlice.customerBasket?.data || [],
-  // );
-  // console.log('customerBasket: ', customerBasket);
-
-  // useEffect(() => {
-  //   console.log('isUserLoggedIn: ', isUserLoggedIn);
-  //   if (isUserLoggedIn) {
-  //     reduxDispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-  //   }
-  // }, [isUserLoggedIn]);
+  
 
   if (state.isLoading) {
     return <SplashScreen />;
