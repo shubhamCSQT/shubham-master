@@ -127,15 +127,15 @@ const MainNavigator = () => {
 
 
   const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice.customerBasket?.data || [],
+    state => state.getCustomerBasketApiSlice?.data || [],
   );
     console.log('customerBasket: ', customerBasket);
 
   useEffect(()=>{
-    console.log('isUserLoggedIn: ', isUserLoggedIn);
-  if(isUserLoggedIn){
+  if(state){
     reduxDispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
   }
+  
   },[isUserLoggedIn])
 
   return (
