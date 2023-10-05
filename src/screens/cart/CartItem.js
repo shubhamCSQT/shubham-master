@@ -18,16 +18,15 @@ const CartItem = ({ item }) => {
   );
 
   const removeItem = async itemId => {
-    setIsLoading(false);
+    setIsLoading(true);
     const reqBody = {
       item_id: itemId,
     };
+    const req = JSON.stringify(reqBody);
     const response = await api
-      .Delete(`sfcc/removeItem/${customerCartId}`, reqBody)
+      .Delete(`sfcc/removeItem/${customerCartId}`, req)
       .then(res => {
-        console.log('res: ', res?.data?.data);
-        return;
-        if (res.data.status == 204) {
+        if (res?.data?.status == 200) {
           dispatch(
             getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`),
           )

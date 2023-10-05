@@ -28,8 +28,8 @@ export default function BottomTabNavigator() {
   );
 
   useEffect(() => {
-      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-       dispatch(createCustomerBasket(`sfcc/createCart`));
+    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+    dispatch(createCustomerBasket(`sfcc/createCart`));
 
     // if (isUserLoggedIn) {
     // }
