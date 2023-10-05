@@ -5,33 +5,43 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CartItemQuantity from './CartItemQuantity';
 import { RemoveIcon } from '@/assets/svgs';
+import { api } from '@/api/SecureAPI';
+import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
+  const customerCartId = useSelector(
+    state =>
+      state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]
+        ?.basket_id || [],
+  );
+
   const removeItem = async itemId => {
-    setIsLoading(true);
+    setIsLoading(false);
+    const reqBody = {
+      item_id: itemId,
+    };
     const response = await api
-      .Delete(`carts/${customerCart.id}/items/${itemId}`)
+      .Delete(`sfcc/removeItem/${customerCartId}`, reqBody)
       .then(res => {
+        console.log('res: ', res?.data?.data);
+        return;
         if (res.data.status == 204) {
-          // dispatch(
-          //   getCustomerCartItems(
-          //     `carts/${customerCart.id}?include=items%2Cbundle-items`,
-          //   ),
-          // ).then(() => {
-          //   setIsLoading(false);
-          // });
-          // dispatch(CustomerCartIdApiAsyncThunk('carts')).then(() => {});
-          // dispatch(getCartDataNew(newCartApiUrl)).then(res => {
-          //   if (res.payload.status === 200) {
-          //     console.log('carts api call successful');
-          //     setIsLoading(false);
-          //   } else {
-          //     console.log('mulesoft carts api call not successful');
-          //     setIsLoading(false);
-          //   }
-          // });
+          dispatch(
+            getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`),
+          )
+            .then(res => {
+              if (res.payload.status === 200) {
+                setIsLoading(false);
+              } else {
+                setIsLoading(false);
+              }
+            })
+            .catch(error => {
+              console.log('error: ', error);
+              setIsLoading(false);
+            });
         }
       });
   };
@@ -76,6 +86,7 @@ const CartItem = ({ item }) => {
                   <CartItemQuantity
                     cartItem={item}
                     removeItemTrigger={removeItem}
+                    customerCartId={customerCartId}
                   />
                 </Box>
                 <Box>

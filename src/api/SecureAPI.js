@@ -53,7 +53,7 @@ const post = async (endPoint, data, loading) => {
       data,
       {
         headers: {
-          Authorization: token,
+          token: token,
         },
         validateStatus: () => true,
         withCredentials: true,
@@ -96,7 +96,9 @@ const Delete = async (endPoint, data, loading) => {
       applicationProperties.baseUrl + endPoint,
       {
         headers: {
-          Authorization: token,
+          token: token,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         validateStatus: () => true,
         withCredentials: true,
@@ -181,7 +183,8 @@ const patch = async (endPoint, data, loading) => {
       data,
       {
         headers: {
-          Authorization: token,
+          token: token,
+          'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         validateStatus: () => true,

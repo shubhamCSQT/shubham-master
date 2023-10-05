@@ -13,8 +13,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import {useNavigation} from '@react-navigation/native';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
-import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
-import { applicationProperties } from '@/utils/application.properties';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import CartItem from './CartItem';
 
@@ -29,10 +27,10 @@ const CartScreen = () => {
     state => state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]?.basket_id || [],
   );
 
+
     const customerCartItems = useSelector(
     state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data || [],
   );
-      // console.log('customerCartItems: ', customerCartItems?.totalizers?.Items>0);
 
   useEffect(() => {
     if (customerCartId) {

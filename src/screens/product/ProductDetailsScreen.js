@@ -25,6 +25,7 @@ import { getProductDetails } from '@/redux/productDetails/ProductDetailsApiAsync
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import axios from 'axios';
 import { applicationProperties } from '@/utils/application.properties';
+import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 const ProductDetailsScreen = props => {
   const { width } = useWindowDimensions();
   const { isUserLoggedIn } = useIsUserLoggedIn();
@@ -32,17 +33,18 @@ const ProductDetailsScreen = props => {
   const dispatch = useDispatch();
 
   const productDetails = useSelector(
-    state => state.getProductDetailsApiSlice.productDetails?.data || [],
+    state => state?.getProductDetailsApiSlice?.productDetails?.data || [],
   );
 
   const basketId = useSelector(
     state =>
-      state.getCustomerBasketApiSlice.customerBasket?.data?.baskets[0]
+      state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]
         ?.basket_id || [],
   );
 
   const productId =
     props.route.params.item.ProductId || props.route.params.item.product_id;
+
   const productName =
     props?.route?.params?.item?.product_name ||
     props?.route?.params?.item?.ProductName;
@@ -76,7 +78,17 @@ const ProductDetailsScreen = props => {
           },
         );
         if (response.status == 200) {
-          setIsLoadingAddToCart(false);
+          dispatch(
+            getCustomerCartItems(`sfcc/getCartDetails/${basketId}`),
+          ).then(res => {
+            if (res.payload.status === 200) {
+              console.log('carts api call successful');
+              setIsLoading(false);
+            } else {
+              setIsLoading(false);
+              console.log('carts api call not successful');
+            }
+          });
           Alert.alert('Product Added to cart');
         } else {
           setIsLoadingAddToCart(false);

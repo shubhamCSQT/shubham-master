@@ -28,12 +28,13 @@ export default function BottomTabNavigator() {
   );
 
   useEffect(() => {
-    if (isUserLoggedIn) {
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-    }
-    if(customerBasket?.total===0){
        dispatch(createCustomerBasket(`sfcc/createCart`));
-    }
+
+    // if (isUserLoggedIn) {
+    // }
+    // if(customerBasket?.total===0){
+    // }
   }, [isUserLoggedIn]);
 
   return (

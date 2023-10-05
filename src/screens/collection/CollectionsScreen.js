@@ -14,7 +14,6 @@ import { Box, theme } from '@atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCollections } from '@/redux/collectionsApi/CollectionsApiAsyncThunk';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
-import { SearchIcon } from '@/assets/svgs';
 
 const CollectionsScreen = () => {
   const navigation = useNavigation();
@@ -38,7 +37,6 @@ const CollectionsScreen = () => {
   }, []);
 
   const handleItemPress = parent_Id => {
-    console.log('parent_Id: ', parent_Id);
     setExpandedItem(expandedItem === parent_Id ? null : parent_Id);
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,
@@ -51,7 +49,6 @@ const CollectionsScreen = () => {
   }, [firstItem]);
 
   const renderSubCategory = ({ item }) => {
-    console.log('item: ', item);
     return (
       <TouchableOpacity
         activeOpacity={0.8}

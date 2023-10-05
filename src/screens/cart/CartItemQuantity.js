@@ -3,46 +3,42 @@ import { Box, Text, theme } from '@atoms';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { api } from '@/api/SecureAPI';
+import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 
-const CartItemQuantity = ({ cartItem }) => {
+const CartItemQuantity = ({ cartItem, customerCartId }) => {
   const [isloading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const changeQuantity = async (itemId, count, sku) => {
+  const changeQuantity = async (itemId, count) => {
     setIsLoading(true);
 
-    const productCart = {
-      data: {
-        type: 'items',
-        attributes: {
-          sku: sku,
-          quantity: count,
-          salesUnit: {
-            id: 0,
-            amount: 0,
-          },
-          productOptions: [null],
-        },
-      },
+    const reqBody = {
+      quantity: count,
     };
     const resp = await api.patch(
-      `carts/${customerCart.id}/items/${itemId}`,
-      JSON.stringify(productCart),
+      `sfcc/update-cart/${customerCartId}/items/${itemId}`,
+      JSON.stringify(reqBody),
     );
     const response = resp.data;
     if (response) {
-      dispatch(CustomerCartIdApiAsyncThunk('carts')).then(() => {});
-      dispatch(getCartDataNew(newCartApiUrl)).then(res => {
-        if (res.payload.status === 200) {
-          console.log('carts api call successful');
+      dispatch(getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`))
+        .then(res => {
+          if (res.payload.status === 200) {
+            console.log('carts api call successful');
+            setIsLoading(false);
+          } else {
+            setIsLoading(false);
+            console.log('carts api call not successful');
+          }
+        })
+        .catch(error => {
+          console.log('error: ', error);
           setIsLoading(false);
-        } else {
-          setIsLoading(false);
-          console.log('mulesoft carts api call not successful');
-        }
-      });
+        });
     } else {
+      Alert.alert('something error');
     }
   };
 
