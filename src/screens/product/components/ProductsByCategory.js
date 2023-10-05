@@ -12,6 +12,7 @@ import CommonHeader from '@/components/CommonHeader/CommonHeader';
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
   const categoryId = props.route?.params?.item?.Id;
+  const categoryName = props.route?.params?.item?.name;
   const isCategoryTrue = props.route?.params?.isCategoryTrue;
   const categoryEndPoint = isCategoryTrue
     ? 'products-by-category'
@@ -42,7 +43,7 @@ const ProductsByCategory = props => {
   );
   return (
     <Box style={styles.container}>
-      <CommonHeader title={'All Products'} showCartIcon searchIcon={true} />
+      <CommonHeader title={`${categoryName}`} showCartIcon searchIcon={true} />
       <>
         {isLoading ? (
           <ActivityIndicator />

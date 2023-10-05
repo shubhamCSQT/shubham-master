@@ -11,8 +11,8 @@ const CarouselCards = ({ images, crosSelling }) => {
   return (
     <Box alignItems="center">
       <Carousel
-        layout="tinder"
-        layoutCardOffset={9}
+        // layout="tinder"
+        // layoutCardOffset={9}
         ref={isCarousel}
         data={images}
         renderItem={CarouselCardItem}

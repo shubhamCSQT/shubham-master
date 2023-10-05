@@ -1,22 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
+import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
   const navigation = useNavigation();
 
   return (
-    <Box
-      marginHorizontal="s4"
-      flexShrink={1}
-      mb="s8"
-      borderWidth={1}
-      borderColor="border"
-      borderRadius={8}
-      flex={1}
-      padding="s8"
-    >
+    <Box marginHorizontal="s4" flexShrink={1} mb="s12" flex={1}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ProductDetailsScreen', {
@@ -30,9 +23,16 @@ const ProductItem = React.memo(({ item }) => {
             style={styles.productImage}
           />
         </Box>
-        <Text style={styles.productTitle} variant="bold18" numberOfLines={1}>
-          {item.ProductName}
-        </Text>
+        <Box maxWidth="95%">
+          <Text
+            style={styles.productTitle}
+            variant="semiBold18"
+            color="darkText"
+            numberOfLines={2}
+          >
+            {item.ProductName}
+          </Text>
+        </Box>
         <Box
           flexDirection="row"
           justifyContent="space-between"
@@ -40,36 +40,24 @@ const ProductItem = React.memo(({ item }) => {
           paddingVertical="s2"
         >
           <Box>
-            <Text fontSize={14} fontWeight="600">
+            <Text variant="semiBold14" color="darkText">
               $ {item?.basePrice}
             </Text>
           </Box>
-          {/* <TouchableOpacity>
-            <Box
-              backgroundColor="purple"
-              padding="s4"
-              paddingHorizontal="s8"
-              borderRadius={8}
-              flexDirection="row"
-              alignItems="center"
-            >
-              <Text
-                fontSize={14}
-                color="white"
-                // fontWeight="600"
-                variant="bold16"
-                marginRight="s4"
-              >
-                Add
-              </Text>
-              <Image
-                source={Icons.addToCartIcon}
-                style={{ width: 24, height: 24, tintColor: 'white' }}
-              />
-            </Box>
-          </TouchableOpacity> */}
         </Box>
       </TouchableOpacity>
+      <Box position="absolute" alignSelf="flex-end">
+        <TouchableOpacity style={{ padding: 6 }}>
+          <Image
+            source={Icons.wishlistIcon}
+            style={{
+              width: 24,
+              height: 24,
+              tintColor: 'white',
+            }}
+          />
+        </TouchableOpacity>
+      </Box>
     </Box>
   );
 });
@@ -78,11 +66,11 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   productImage: {
-    width: 150,
-    height: 150,
+    width: '100%',
+    height: 250,
     marginBottom: 8,
     backgroundColor: 'white',
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   productTitle: {
     fontSize: 16,

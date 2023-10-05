@@ -14,41 +14,49 @@ const PersonalDetailsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const getUserDetails = useSelector(
+  const userDetails = useSelector(
     state => state?.getCustomerDetailsApiSlice?.customerDetails?.data || [],
   );
 
   const onPressLogout = () => {
     signOut();
   };
+
   useEffect(() => {
-    dispatch(getCustomerDetails(`user-details/tarundrupal@yopmail.com`));
+    setIsLoading(true);
+    dispatch(getCustomerDetails(`user-details/tarundrupal@yopmail.com`)).then(
+      () => {
+        setIsLoading(false);
+      },
+    );
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
+      <CommonHeader title={'Your Account'} />
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator color={theme.colors.sushiittoRed} />
         </View>
       ) : (
         <>
-          {getUserDetails ? (
+          {userDetails ? (
             <View style={styles.profileDetailsContainer}>
               <ProfileRow
                 label="First Name"
-                value={getUserDetails?.userProfile?.firstName}
+                value={userDetails?.userProfile?.firstName}
               />
               <ProfileRow
                 label="Last Name"
-                value={getUserDetails?.userProfile?.lastName}
+                value={userDetails?.userProfile?.lastName}
               />
               <ProfileRow
                 label="Email"
-                value={getUserDetails?.userProfile?.email}
+                value={userDetails?.userProfile?.email}
               />
               <ProfileRow
                 label="state"
-                value={getUserDetails?.userProfile?.state}
+                value={userDetails?.userProfile?.state}
               />
               {/* <ProfileRow label="Date Of Birth" value={profileDataAttributes.dateOfBirth} /> */}
             </View>

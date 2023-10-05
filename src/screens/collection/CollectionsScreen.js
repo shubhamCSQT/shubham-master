@@ -3,17 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   TouchableOpacity,
-  Text,
   StyleSheet,
   FlatList,
   Animated,
   LayoutAnimation,
   ActivityIndicator,
 } from 'react-native';
-import { Box, theme } from '@atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCollections } from '@/redux/collectionsApi/CollectionsApiAsyncThunk';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
+import { Box, Text, theme } from '@/atoms';
 
 const CollectionsScreen = () => {
   const navigation = useNavigation();
@@ -126,8 +125,16 @@ const CollectionsScreen = () => {
 
   return (
     <>
-      <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} />
-      <Box flex={1} paddingHorizontal="paddingHorizontal" mt="s8">
+      {/* <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} /> */}
+      <Box
+        flex={1}
+        paddingHorizontal="paddingHorizontal"
+        pt="s8"
+        backgroundColor="background"
+      >
+        <Box paddingBottom="s16">
+          <Text variant="bold18">Collections</Text>
+        </Box>
         <FlatList
           data={categories}
           renderItem={renderCategory}
@@ -181,6 +188,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: '#ffffff',
     borderRadius: 8,
+    alignItems: 'center',
   },
 });
 

@@ -32,15 +32,14 @@ const NewArrivals = () => {
         ) : (
           ''
         )}
-
-        <FlatList
-          data={newArrivals}
-          renderItem={renderItem}
-          // key={Math.random()}
-          keyExtractor={item => item?.skuId?.toString()}
-          numColumns={2}
-          contentContainerStyle={styles.productList}
-        />
+        <Box paddingHorizontal="s6">
+          <FlatList
+            data={newArrivals}
+            renderItem={renderItem}
+            keyExtractor={item => item?.skuId?.toString()}
+            numColumns={2}
+          />
+        </Box>
       </>
     </Box>
   );
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    padding: 16,
+    // padding: 16,
   },
 
   productList: {

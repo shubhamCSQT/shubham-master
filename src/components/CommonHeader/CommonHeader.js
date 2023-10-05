@@ -1,18 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Box, Text, theme } from '@/atoms';
 import GoBackButton from '../GoBackButton/GoBackButton';
 import { CartIcon } from '../../assets/svgs';
-// import {useGoToCart} from '../../hooks/useGoToCart';
-// import {useIsUserLoggedIn} from '../../hooks/useIsUserLoggedIn';
-// import {useGuestCartItemsCount} from '../../hooks/useGuestCartItemsCount';
-// import {useCartItemsCount} from '../../hooks/useCartItemsCount';
 import { useNavigation } from '@react-navigation/native';
 import { FONT } from '@/atoms';
 
@@ -25,13 +16,8 @@ const CommonHeader = ({
 }) => {
   const navigation = useNavigation();
   const [searchText, setSearchText] = React.useState();
-  // const {goToCart} = useGoToCart();
-  // const {isUserLoggedIn} = useIsUserLoggedIn();
-
-  // const {cartItemsCount} = useCartItemsCount();
 
   const onPressCart = () => {
-    // goToCart();
     navigation.navigate('CartScreen');
   };
 

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
@@ -41,7 +42,7 @@ export default function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#4486c6',
+        tabBarActiveTintColor: theme.colors.lightBlack,
         tabBarActiveBackgroundColor: theme.backgroundColor,
         tabBarInactiveBackgroundColor: theme.backgroundColor,
       }}
@@ -61,7 +62,7 @@ export default function BottomTabNavigator() {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Cart"
         component={CartScreen}
         options={{
@@ -73,14 +74,14 @@ export default function BottomTabNavigator() {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Collection"
+        name="Collections"
         component={CollectionsScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <BottomTabIcon
-              source={Icons.cartIcon}
+              source={Icons.collectionsIcon}
               focused={focused}
               color={color}
             />
@@ -88,7 +89,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Account"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color }) => (

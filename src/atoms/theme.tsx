@@ -4,12 +4,12 @@ import { Platform } from 'react-native';
 const globalPallete = {};
 
 export const FONT = {
-  PrimaryExtraLight: 'TitilliumWeb-ExtraLight', // 200
-  PrimaryLight: 'TitilliumWeb-Light', // 300
-  Primary: 'TitilliumWeb-Regular', // 400
-  PrimarySemiBold: 'TitilliumWeb-SemiBold', // 600
-  PrimaryBold: 'TitilliumWeb-Bold', // 700
-  PrimaryHeavy: 'TitilliumWeb-Black', // 900
+  PrimaryExtraLight: 'Metropolis-ExtraLight', // 200
+  PrimaryLight: 'Metropolis-Light', // 300
+  Primary: 'Metropolis-Regular', // 400
+  PrimarySemiBold: 'Metropolis-SemiBold', // 600
+  PrimaryBold: 'Metropolis-Bold', // 700
+  PrimaryHeavy: 'Metropolis-Black', // 900
 };
 
 export const theme = createTheme({

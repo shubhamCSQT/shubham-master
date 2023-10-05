@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState, useEffect, useContext } from 'react';
@@ -142,26 +141,32 @@ const CartScreen = () => {
         ) : (
           <>
             <Box flex={1} justifyContent="center">
-              <Text textAlign="center">PLease logged in first!</Text>
+              <Text textAlign="center">Please logged in first</Text>
             </Box>
           </>
         )}
       </Box>
-      <Box
-        padding="s16"
-        style={theme.cardVariants.bottomButtonShadow}
-        backgroundColor="white"
-      >
-        <CommonSolidButton
-          title="Proceed to Checkout"
-          onPress={() =>
-            navigation.replace('CheckoutScreen', {
-              cartId: customerCartId,
-              cartItemsArray: cartItemsArray,
-            })
-          }
-        />
-      </Box>
+      {customerCartItems?.products?.length != undefined ? (
+        <>
+          <Box
+            padding="s16"
+            style={theme.cardVariants.bottomButtonShadow}
+            backgroundColor="white"
+          >
+            <CommonSolidButton
+              title="Proceed to Checkout"
+              onPress={() =>
+                navigation.replace('CheckoutScreen', {
+                  cartId: customerCartId,
+                  cartItemsArray: cartItemsArray,
+                })
+              }
+            />
+          </Box>
+        </>
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 };

@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import { theme } from '@/atoms';
 import React from 'react';
 import { Image } from 'react-native';
 
@@ -17,7 +18,7 @@ export const BottomTabIcon = ({
       style={{
         width: 24,
         height: 24,
-        tintColor: focused ? '#4486c6' : color,
+        tintColor: focused ? theme.colors.black : theme.colors.lightGrey,
       }}
     />
   );
