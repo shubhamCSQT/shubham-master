@@ -19,14 +19,16 @@ import { useDispatch } from 'react-redux';
 import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
 import SignUpScreen from './SignUpScreen';
 import { reduxStorage } from '@/store';
+import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
+import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
 
 export default function LoginScreen(props) {
   const dispatch = useDispatch();
   const { signIn } = useContext(AuthContext);
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState('login');
-  const [userEmail, setUserEmail] = useState('div@gmail.com');
-  const [password, setPassword] = useState('Divyansh@123');
+  const [userEmail, setUserEmail] = useState('amber@gmail.com');
+  const [password, setPassword] = useState('Amber@123');
   const [isLoading, setIsLoading] = useState(false);
 
   const onPressLogin = async () => {
@@ -49,8 +51,10 @@ export default function LoginScreen(props) {
       // var token = response?.data?.data?.validation?.authCookie?.Value;
       var token = response?.data?.data?.bearerToken;
       const customerId = response?.data?.data?.customer_id;
+      console.log('customerId: ', response?.data?.data?.customer_id);
       reduxStorage.setItem('customerId', customerId);
-
+      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+      dispatch(createCustomerBasket(`sfcc/createCart`));
       signIn(token);
       Toast.show({
         type: 'success',

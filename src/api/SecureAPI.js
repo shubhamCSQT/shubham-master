@@ -141,7 +141,7 @@ const put = async (endPoint, data, loading) => {
       data,
       {
         headers: {
-          Authorization: token,
+          token: token,
         },
         validateStatus: () => true,
         withCredentials: true,

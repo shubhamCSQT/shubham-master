@@ -26,7 +26,10 @@ import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import axios from 'axios';
 import { applicationProperties } from '@/utils/application.properties';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
+import { storage } from '@/store';
 const ProductDetailsScreen = props => {
+  const customerId = storage.getString('customerId');
+
   const { width } = useWindowDimensions();
   const { isUserLoggedIn } = useIsUserLoggedIn();
   const navigation = useNavigation();
@@ -55,10 +58,9 @@ const ProductDetailsScreen = props => {
   const [imageCarousel, setImageCarousel] = useState([]);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [productImage, setProductImage] = useState('');
-
   const onPressAddToCart = () => {
     setIsLoadingAddToCart(true);
-    if (isUserLoggedIn) {
+    if (isUserLoggedIn && basketId) {
       const addToCart = async () => {
         userToken = await Keychain.getGenericPassword();
         setIsLoadingAddToCart(false);
@@ -77,7 +79,14 @@ const ProductDetailsScreen = props => {
             withCredentials: true,
           },
         );
-        if (response.status == 200) {
+
+        if (response?.status == 401) {
+          Alert.alert(
+            'Unauthorised',
+            'Your session is expired , Please login!',
+          );
+          navigation.navigate('LoginScreen');
+        } else if (response.status == 200) {
           dispatch(
             getCustomerCartItems(`sfcc/getCartDetails/${basketId}`),
           ).then(res => {
@@ -92,7 +101,6 @@ const ProductDetailsScreen = props => {
           Alert.alert('Product Added to cart');
         } else {
           setIsLoadingAddToCart(false);
-
           Alert.alert('Something went wrong');
         }
       };
@@ -100,6 +108,12 @@ const ProductDetailsScreen = props => {
     }
   };
 
+  useEffect(() => {
+    const getToken = async () => {
+      userToken = await Keychain.getGenericPassword();
+    };
+    getToken();
+  }, []);
   useEffect(() => {
     setIsLoading(true);
     dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
@@ -171,7 +185,7 @@ const ProductDetailsScreen = props => {
                 flexGrow: 1,
               }}
             >
-              {!productDetails?.error && imageCarousel ? (
+              {!productDetails?.error && imageCarousel && !isLoading ? (
                 <Box style={styles.productDetails}>
                   {/* <Image
                   style={styles.backImage}
@@ -197,7 +211,7 @@ const ProductDetailsScreen = props => {
                       )}
                     </Box>
                     <Box flex={1}>
-                      {productDetails?.skus?.length >= 1 && (
+                      {productDetails?.skus?.length >= 1 && imageCarousel && (
                         <Box flex={1}>
                           <Text variant="bold16" mt="s8">
                             Choose Variation :{' '}

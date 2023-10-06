@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
+
 import { Box, Text, theme } from '@/atoms';
 import { useSelector, useDispatch } from 'react-redux';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
@@ -15,6 +16,9 @@ import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import CartItem from './CartItem';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
+import { customerId } from '@/utils/appUtils';
+
+import { storage } from '@/store';
 
 const CartScreen = () => {
   const navigation = useNavigation();
@@ -32,7 +36,6 @@ const CartScreen = () => {
   const customerCartItems = useSelector(
     state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data || [],
   );
-  console.log('customerCartItems: ', customerCartItems);
 
   useEffect(() => {
     dispatch(
@@ -157,8 +160,7 @@ const CartScreen = () => {
               title="Proceed to Checkout"
               onPress={() =>
                 navigation.replace('CheckoutScreen', {
-                  cartId: customerCartId,
-                  cartItemsArray: cartItemsArray,
+                  basketId: customerCartId,
                 })
               }
             />

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '@/screens/auth/LoginScreen';
+import CheckoutScreen from '@/screens/checkout/CheckoutScreen';
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {

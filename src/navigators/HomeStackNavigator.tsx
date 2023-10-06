@@ -9,6 +9,7 @@ import SignUpScreen from '@/screens/auth/SignUpScreen';
 import PersonalDetailsScreen from '@/screens/profile/PersonalDetailsScreen';
 import CartScreen from '@/screens/cart/CartScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
+import CheckoutScreen from '@/screens/checkout/CheckoutScreen';
 const Stack = createStackNavigator();
 
 const HomeStackNavigator = () => {
@@ -30,7 +31,9 @@ const HomeStackNavigator = () => {
         name="PersonalDetailsScreen"
         component={PersonalDetailsScreen}
       />
+
       <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
     </Stack.Navigator>
   );
 };
