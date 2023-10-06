@@ -8,16 +8,14 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import * as Keychain from 'react-native-keychain';
 
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
-import CommonLoading from '@/components/CommonLoading';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 import ShipmentAddress from './ShipmentAddress';
 import ShippingMethod from './ShippingMethod';
 import { useNavigation } from '@react-navigation/native';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
 console.log('customerId: ', customerId);
@@ -46,6 +44,7 @@ const CheckoutScreen = props => {
     };
     shipment();
   }, [basketId]);
+
   //   useEffect(() => {
   //     const token = async () => {
   //       var userToken = await Keychain.getGenericPassword();
@@ -101,6 +100,7 @@ const CheckoutScreen = props => {
       Alert.alert('Error', 'Something went wrong');
     }
   };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <Box flex={1} backgroundColor="white">

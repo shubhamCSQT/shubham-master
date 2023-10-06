@@ -44,6 +44,8 @@ export default function LoginScreen(props) {
 
     if (response.data?.status === 200) {
       console.log('HERE');
+      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
+      dispatch(createCustomerBasket(`sfcc/createCart`));
       // await AsyncStorage.setItem(
       //   'tokenExpiry',
       //   response?.data?.data?.validation?.authCookie?.Value,
@@ -53,15 +55,13 @@ export default function LoginScreen(props) {
       const customerId = response?.data?.data?.customer_id;
       console.log('customerId: ', response?.data?.data?.customer_id);
       reduxStorage.setItem('customerId', customerId);
-      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-      dispatch(createCustomerBasket(`sfcc/createCart`));
       signIn(token);
-      Toast.show({
-        type: 'success',
-        text1: `Welcome ${response?.data?.data?.first_name || 'User'}!`,
-        text2: 'You are now logged in. 🎉',
-        position: 'top',
-      });
+      // Toast.show({
+      //   type: 'success',
+      //   text1: `Welcome ${response?.data?.data?.first_name || 'User'}!`,
+      //   text2: 'You are now logged in. 🎉',
+      //   position: 'top',
+      // });
       // CommonLoading.hide();
       // dispatch(getCustomerDetails('user-details/tarundrupal@yopmail.com')).then(
       //   res => {
@@ -173,7 +173,7 @@ export default function LoginScreen(props) {
                 </>
               ) : (
                 <Box
-                  backgroundColor="sushiittoRed"
+                  backgroundColor="purple"
                   height={40}
                   borderRadius={theme.spacing.lml}
                   alignItems="center"

@@ -6,6 +6,7 @@ import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
+  console.log('item: ', item);
   const navigation = useNavigation();
 
   return (
@@ -19,7 +20,7 @@ const ProductItem = React.memo(({ item }) => {
       >
         <Box alignItems="center">
           <Image
-            source={{ uri: item.SkuImageUrl }}
+            source={{ uri: item?.SkuImageUrl || item?.product_image }}
             style={styles.productImage}
           />
         </Box>
@@ -30,7 +31,7 @@ const ProductItem = React.memo(({ item }) => {
             color="darkText"
             numberOfLines={2}
           >
-            {item.ProductName}
+            {item?.ProductName || item?.product_name}
           </Text>
         </Box>
         <Box
@@ -41,7 +42,7 @@ const ProductItem = React.memo(({ item }) => {
         >
           <Box>
             <Text variant="semiBold14" color="darkText">
-              $ {item?.basePrice}
+              $ {item?.basePrice || item?.product_price?.listPrice}
             </Text>
           </Box>
         </Box>

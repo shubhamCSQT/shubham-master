@@ -6,6 +6,7 @@ import GoBackButton from '../GoBackButton/GoBackButton';
 import { CartIcon } from '../../assets/svgs';
 import { useNavigation } from '@react-navigation/native';
 import { FONT } from '@/atoms';
+import { useSelector } from 'react-redux';
 
 const CommonHeader = ({
   title,
@@ -15,7 +16,12 @@ const CommonHeader = ({
   ...props
 }) => {
   const navigation = useNavigation();
-  const [searchText, setSearchText] = React.useState();
+
+  const customerCartItems = useSelector(
+    state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data || [],
+  );
+
+  const numOfCartItems = customerCartItems?.products?.length;
 
   const onPressCart = () => {
     navigation.navigate('CartScreen');
@@ -38,35 +44,32 @@ const CommonHeader = ({
               style={styles.cartContainer}
               onPress={onPressCart}
             >
-              {/* {cartItemsCount !== null ? ( */}
-              <>
-                <Box
-                  style={{
-                    backgroundColor: '#F50157',
-                    zIndex: 2,
-                    position: 'absolute',
-                    alignItems: 'center',
-                    width: 16,
-                    height: 16,
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                    borderRadius: 100,
-                    marginLeft: 16,
-                  }}
-                >
-                  <Text
-                    fontSize={12}
-                    // fontWeight="700"
-                    variant="bold18"
-                    ml="s2"
-                  >
-                    {/* {cartItemsCount ?? 0} */}
-                  </Text>
-                </Box>
-              </>
-              {/* ) : (
+              {numOfCartItems > 0 ? (
+                <>
+                  <>
+                    <Box
+                      style={{
+                        backgroundColor: '#F50157',
+                        zIndex: 2,
+                        position: 'absolute',
+                        alignItems: 'center',
+                        width: 16,
+                        height: 16,
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        borderRadius: 100,
+                        marginLeft: 16,
+                      }}
+                    >
+                      <Text fontSize={12} variant="bold18" ml="s2">
+                        {numOfCartItems}
+                      </Text>
+                    </Box>
+                  </>
+                </>
+              ) : (
                 <></>
-              )} */}
+              )}
               <CartIcon />
             </TouchableOpacity>
           </>

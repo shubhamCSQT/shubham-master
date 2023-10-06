@@ -70,7 +70,7 @@ const CartItem = ({ item }) => {
               </Box>
             </Box>
             <Box justifyContent="space-between">
-              <Box>
+              <Box width={'90%'}>
                 <Text variant="bold16">{item?.productName}</Text>
                 <Text variant="bold16" style={{ marginTop: 4 }}>
                   ${item?.price}
@@ -88,13 +88,13 @@ const CartItem = ({ item }) => {
                     customerCartId={customerCartId}
                   />
                 </Box>
-                <Box>
+                {/* <Box>
                   <TouchableOpacity onPress={() => removeItem(item?.itemId)}>
                     <Text>
                       <RemoveIcon />
                     </Text>
                   </TouchableOpacity>
-                </Box>
+                </Box> */}
               </Box>
             </Box>
           </Box>

@@ -6,8 +6,9 @@ import { theme } from '../../../atoms/theme';
 import { Box, Text } from '@/atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductsApiAsyncThunk } from '@/redux/productsApi/ProductsApiAsyncThunk';
-import ProductItem from '@/components/product/ProductItem';
+// import ProductItem from '@/components/product/ProductItem';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
+import ProductItem from '@/screens/home/components/ProductItem';
 
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +39,8 @@ const ProductsByCategory = props => {
 
   const renderItem = ({ item, index }) => (
     <>
-      <ProductItem item={item} index={index} />
+      {/* <ProductItem item={item} index={index} /> */}
+      <ProductItem item={item} />
     </>
   );
   return (
