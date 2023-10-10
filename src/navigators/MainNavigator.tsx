@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import SplashScreen from '@/components/SplashScreen/SplashScreen';
 import AuthNavigator from './AuthNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
+import OrderScreen from '@/screens/orders/OrdersScreen';
+import OrderDetailsScreen from '@/screens/orders/OrderDetailsScreen';
 const Stack = createStackNavigator();
 
 export const AuthContext = React.createContext({});
@@ -129,6 +131,11 @@ const MainNavigator = () => {
             <Stack.Screen
               name="HomeStackNavigator"
               component={HomeStackNavigator}
+            />
+            <Stack.Screen name="OrdersScreen" component={OrderScreen} />
+            <Stack.Screen
+              name="OrderDetailsScreen"
+              component={OrderDetailsScreen}
             />
           </>
         )}

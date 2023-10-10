@@ -29,6 +29,7 @@ import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import { storage } from '@/store';
 const ProductDetailsScreen = props => {
   const customerId = storage.getString('customerId');
+  console.log('customerId: ', customerId);
 
   const { width } = useWindowDimensions();
   const { isUserLoggedIn } = useIsUserLoggedIn();
@@ -120,6 +121,8 @@ const ProductDetailsScreen = props => {
       setIsLoading(false);
     });
   }, [productId]);
+
+  console.log('imageCarousel: ', imageCarousel);
 
   useEffect(() => {
     if (

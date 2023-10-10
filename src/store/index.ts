@@ -24,8 +24,9 @@ import getCollectionsApiSlice from '../redux/collectionsApi/CollectionsApiSlice'
 import getProductsBySubCategoryApiSlice from '../redux/productsBySubCategory/SubCategoryProductsApiSlice';
 import getCustomerDetailsApiSlice from '../redux/profileApi/ProfileApiSlice';
 import getCustomerBasketApiSlice from '../redux/basket/BasketApiSlice';
-import createCustomerBasketSlice  from '../redux/createBasketApi/CreateBasketApiSlice'
-import getCustomerCartItemsAliSlice  from '../redux/cartItemsApi/CartItemsSlice'
+import createCustomerBasketSlice from '../redux/createBasketApi/CreateBasketApiSlice'
+import getCustomerCartItemsAliSlice from '../redux/cartItemsApi/CartItemsSlice'
+import getOrdersDataApiSlice from '../redux/ordersApi/OrdersApiSlice';
 const reducers = combineReducers({
   theme,
   createCustomerBasketSlice,
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   getBestSellingsApiSlice,
   getCollectionsApiSlice,
   getProductsBySubCategoryApiSlice,
+  getOrdersDataApiSlice,
   [api.reducerPath]: api.reducer,
 });
 export const storage = new MMKV();

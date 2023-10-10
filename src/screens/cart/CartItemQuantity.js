@@ -6,14 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { api } from '@/api/SecureAPI';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 
-const CartItemQuantity = ({ cartItem, customerCartId }) => {
+const CartItemQuantity = ({ cartItem, customerCartId, removeItemTrigger }) => {
   const [isloading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const changeQuantity = async (itemId, count) => {
     setIsLoading(true);
-
     const reqBody = {
       quantity: count,
     };
@@ -45,7 +44,11 @@ const CartItemQuantity = ({ cartItem, customerCartId }) => {
   return (
     <Box flexDirection="row" alignItems="center">
       <TouchableOpacity
-        onPress={() => changeQuantity(cartItem?.itemId, cartItem?.quantity + 1)}
+        onPress={() =>
+          cartItem?.quantity == 1
+            ? removeItemTrigger(cartItem?.itemId)
+            : changeQuantity(cartItem?.itemId, cartItem?.quantity - 1)
+        }
         style={styles.quantityButton}
       >
         <Text style={styles.quantityText}>-</Text>
