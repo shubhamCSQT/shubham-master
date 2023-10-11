@@ -14,7 +14,7 @@ const CartItem = ({ item }) => {
   const customerCartId = useSelector(
     state =>
       state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]
-        ?.basket_id || [],
+        ?.basket_id,
   );
 
   const removeItem = async itemId => {

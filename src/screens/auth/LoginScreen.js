@@ -96,11 +96,13 @@ export default function LoginScreen(props) {
   // const onPressSubmit = () => {
   //   onPressLogin();
   // };
+
   function isValidEmail(email) {
     // Regular expression for email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
+
   const getButtonStatus = () => {
     if (isValidEmail(userEmail) === false || password.length === 0) {
       return true;
@@ -108,6 +110,7 @@ export default function LoginScreen(props) {
       return false;
     }
   };
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <Box flex={1} padding="s16" backgroundColor="white">

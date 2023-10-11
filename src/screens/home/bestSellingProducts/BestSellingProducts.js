@@ -7,8 +7,9 @@ import { getBestSellings } from '@/redux/bestSellingProductApi/BestSellingProduc
 import ProductItem from '../components/ProductItem';
 const BestSellingProducts = () => {
   const dispatch = useDispatch();
+
   const bestSellings = useSelector(
-    state => state?.getBestSellingsApiSlice?.bestSellings?.data || [],
+    state => state?.getBestSellingsApiSlice?.bestSellings?.data,
   );
 
   useEffect(() => {

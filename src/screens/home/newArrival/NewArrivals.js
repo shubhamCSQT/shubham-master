@@ -9,14 +9,13 @@ const NewArrivals = () => {
   const dispatch = useDispatch();
 
   const newArrivals = useSelector(
-    state => state?.getNewArrivalApiSlice?.newArrivals?.data || [],
+    state => state?.getNewArrivalApiSlice?.newArrivals?.data,
   );
 
   // const renderItem = ({ item, index }) => <ProductItem item={item} />;
 
-  const renderItem = useCallback(({ item }) => {
-    // render logic
-    return <ProductItem item={item} />;
+  const renderItem = useCallback(({ item, index }) => {
+    return <ProductItem item={item} key={index} />;
   }, []);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const NewArrivals = () => {
     <Box style={styles.container}>
       {/* <CommonHeader title={title || 'All Products'} showCartIcon /> */}
       <>
-        {newArrivals.length !== 0 ? (
+        {newArrivals?.length !== 0 ? (
           <Text style={styles.heading}>New Arrivals</Text>
         ) : (
           ''

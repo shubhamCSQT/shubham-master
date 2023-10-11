@@ -26,7 +26,7 @@ const CollectionsScreen = () => {
 
   const dispatch = useDispatch();
   const categories = useSelector(
-    state => state?.getCollectionsApiSlice?.collections?.data || [],
+    state => state?.getCollectionsApiSlice?.collections?.data,
   );
   const firstItem = categories?.[0]?.Id || null;
 

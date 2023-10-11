@@ -15,7 +15,7 @@ const PersonalDetailsScreen = () => {
   const dispatch = useDispatch();
 
   const userDetails = useSelector(
-    state => state?.getCustomerDetailsApiSlice?.customerDetails?.data || [],
+    state => state?.getCustomerDetailsApiSlice?.customerDetails?.data,
   );
 
   const onPressLogout = () => {

@@ -6,7 +6,6 @@ import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
-  console.log('item: ', item);
   const navigation = useNavigation();
 
   return (
@@ -20,7 +19,12 @@ const ProductItem = React.memo(({ item }) => {
       >
         <Box alignItems="center">
           <Image
-            source={{ uri: item?.SkuImageUrl || item?.product_image }}
+            source={{
+              uri:
+                item?.SkuImageUrl ||
+                item?.product_image ||
+                item?.images?.image1,
+            }}
             style={styles.productImage}
           />
         </Box>

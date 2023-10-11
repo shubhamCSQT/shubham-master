@@ -30,12 +30,16 @@ const CartScreen = () => {
   const customerCartId = useSelector(
     state =>
       state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]
-        ?.basket_id || [],
+        ?.basket_id,
   );
 
   const customerCartItems = useSelector(
-    state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data || [],
+    state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data,
   );
+
+  const renderItem = () => {
+    20;
+  };
 
   useEffect(() => {
     dispatch(

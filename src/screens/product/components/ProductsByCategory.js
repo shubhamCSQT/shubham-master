@@ -24,7 +24,7 @@ const ProductsByCategory = props => {
   const productsByCategory = useSelector(
     state =>
       state?.getProductsByCategoryApiSlice?.productsByCategory?.data
-        ?.ProductData || [],
+        ?.ProductData,
   );
 
   useEffect(() => {
@@ -43,6 +43,7 @@ const ProductsByCategory = props => {
       <ProductItem item={item} />
     </>
   );
+
   return (
     <Box style={styles.container}>
       <CommonHeader title={`${categoryName}`} showCartIcon searchIcon={true} />

@@ -18,10 +18,10 @@ const CommonHeader = ({
   const navigation = useNavigation();
 
   const customerCartItems = useSelector(
-    state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data || [],
+    state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data,
   );
 
-  const numOfCartItems = customerCartItems?.products?.length;
+  // const numOfCartItems = customerCartItems?.products?.length;
 
   const onPressCart = () => {
     navigation.navigate('CartScreen');
@@ -44,7 +44,7 @@ const CommonHeader = ({
               style={styles.cartContainer}
               onPress={onPressCart}
             >
-              {numOfCartItems > 0 ? (
+              {/* {numOfCartItems > 0 ? (
                 <>
                   <>
                     <Box
@@ -69,7 +69,7 @@ const CommonHeader = ({
                 </>
               ) : (
                 <></>
-              )}
+              )} */}
               <CartIcon />
             </TouchableOpacity>
           </>

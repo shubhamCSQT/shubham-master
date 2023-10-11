@@ -25,7 +25,7 @@ export default function BottomTabNavigator() {
   const dispatch = useDispatch();
 
   const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice?.customerBasket?.data || [],
+    state => state.getCustomerBasketApiSlice?.customerBasket?.data,
   );
 
   useEffect(() => {

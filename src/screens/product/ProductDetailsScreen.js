@@ -36,13 +36,13 @@ const ProductDetailsScreen = props => {
   const dispatch = useDispatch();
 
   const productDetails = useSelector(
-    state => state?.getProductDetailsApiSlice?.productDetails?.data || [],
+    state => state?.getProductDetailsApiSlice?.productDetails?.data,
   );
 
   const basketId = useSelector(
     state =>
       state?.getCustomerBasketApiSlice?.customerBasket?.data?.baskets?.[0]
-        ?.basket_id || [],
+        ?.basket_id,
   );
 
   const productId =

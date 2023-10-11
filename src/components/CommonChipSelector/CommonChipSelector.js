@@ -1,15 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useEffect, useState} from 'react';
-import {Box, Text, theme} from '@atoms';
-import {FlatList, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Box, Text, theme } from '@atoms';
+import { FlatList, TouchableOpacity } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-const CommonChipSelector = ({DATA, selectedIndex, setSelectedIndex, title}) => {
+const CommonChipSelector = ({
+  DATA,
+  selectedIndex,
+  setSelectedIndex,
+  title,
+}) => {
   const [flatListArray, setFlatListArray] = useState([]);
 
-  const Item = ({item}) => {
+  const Item = ({ item }) => {
     const onPressItem = () => {
       let newArr = [];
       if ((flatListArray || item.index !== -1) && item.isSelected === false) {
@@ -31,14 +36,16 @@ const CommonChipSelector = ({DATA, selectedIndex, setSelectedIndex, title}) => {
           borderRadius: 100,
         }}
         activeOpacity={0.8}
-        onPress={onPressItem}>
+        onPress={onPressItem}
+      >
         <Box
           paddingVertical="s12"
           paddingHorizontal="paddingHorizontal"
           flexDirection="row"
           // flexWrap="wrap"
           backgroundColor="inputGrey"
-          borderRadius={100}>
+          borderRadius={100}
+        >
           <BouncyCheckbox
             disableBuiltInState
             isChecked={item.isSelected}
@@ -56,7 +63,8 @@ const CommonChipSelector = ({DATA, selectedIndex, setSelectedIndex, title}) => {
               variant="regular14LightBlack"
               lineHeight={20}
               numberOfLines={1}
-              color={item?.isSelected ? 'lightBlack' : 'lightGrey'}>
+              color={item?.isSelected ? 'lightBlack' : 'lightGrey'}
+            >
               {item.title}
             </Text>
           </Box>
@@ -65,7 +73,7 @@ const CommonChipSelector = ({DATA, selectedIndex, setSelectedIndex, title}) => {
     );
   };
 
-  const renderItem = ({item}) => <Item item={item} />;
+  const renderItem = ({ item, index }) => <Item item={item} key={index} />;
 
   const addOptions = DATA?.map((item, index) => {
     return {
