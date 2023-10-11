@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
+import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,11 @@ export default function BottomTabNavigator() {
     // }
   }, [isUserLoggedIn]);
 
+  useEffect(() => {
+    dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(
+      () => {},
+    );
+  }, [customerId]);
   return (
     <Tab.Navigator
       screenOptions={{

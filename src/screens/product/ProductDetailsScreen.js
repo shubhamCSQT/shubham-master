@@ -82,10 +82,7 @@ const ProductDetailsScreen = props => {
         );
 
         if (response?.status == 401) {
-          Alert.alert(
-            'Unauthorised',
-            'Your session is expired , Please login!',
-          );
+          Alert.alert('Unauthorize', 'Your session is expired , Please login!');
           navigation.navigate('LoginScreen');
         } else if (response.status == 200) {
           dispatch(

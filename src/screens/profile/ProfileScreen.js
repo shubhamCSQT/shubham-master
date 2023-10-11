@@ -30,8 +30,12 @@ export default function ProfileScreen() {
     },
 
     {
-      name: 'Add Address',
-      onPress: function () {},
+      name: 'My Address',
+      onPress: function () {
+        isUserLoggedIn
+          ? navigation.navigate('AddressScreen')
+          : navigation.navigate('LoginScreen');
+      },
     },
   ];
 
