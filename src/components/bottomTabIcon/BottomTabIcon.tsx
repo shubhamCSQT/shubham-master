@@ -16,8 +16,8 @@ export const BottomTabIcon = ({
     <Image
       source={source}
       style={{
-        width: 24,
-        height: 24,
+        width: 25,
+        height: 25,
         tintColor: focused ? theme.colors.black : theme.colors.lightGrey,
       }}
     />

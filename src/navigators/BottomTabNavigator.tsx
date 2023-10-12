@@ -45,6 +45,10 @@ export default function BottomTabNavigator() {
         tabBarActiveTintColor: theme.colors.lightBlack,
         tabBarActiveBackgroundColor: theme.backgroundColor,
         tabBarInactiveBackgroundColor: theme.backgroundColor,
+        tabBarStyle: {
+          // height: 49, // default
+          // height: 42,
+        },
       }}
     >
       <Tab.Screen
