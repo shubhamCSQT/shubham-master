@@ -21,7 +21,7 @@ const OrderItem = ({ item }) => {
             <Image
               style={{ height: 120, width: 120, resizeMode: 'contain' }}
               source={{
-                uri: 'https://zzkd-003.dx.commercecloud.salesforce.com/on/demandware.static/-/Sites-apparel-m-catalog/default/dw34bed4cb/images/large/PG.10228237.JJDL6XX.PZ.jpg',
+                uri: item?.imageUrl,
               }}
             />
           </Box>

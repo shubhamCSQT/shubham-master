@@ -18,7 +18,6 @@ import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsy
 import { useDispatch } from 'react-redux';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
-console.log('customerId: ', customerId);
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 const CheckoutScreen = props => {
   const basketId = props.route.params?.basketId;
@@ -82,17 +81,16 @@ const CheckoutScreen = props => {
       Alert.alert('Unauthorised', 'Your session is expired , Please login!');
       navigation.navigate('LoginScreen');
     }
-    if (confirmPayment?.data?.status == 200) {
+    if (confirmPayment?.data?.status == 201) {
       const reqBody = {
         basket_id: basketId,
       };
+
       const confirmOrder = await api.post(`sfcc/placeOrder`, reqBody);
-      console.log('confirmOrder: ', confirmOrder?.data);
-      console.log('confirmOrder: ', confirmOrder?.data?.status);
-      if (confirmOrder?.data?.status == 200) {
+      if (confirmOrder?.data?.status == 201) {
         dispatch(createCustomerBasket(`sfcc/createCart`));
         dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-        dispatch(getCustomerCartItems(`sfcc/getCartDetails/${basketId}`));
+        dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`));
         Alert.alert('Order Placed', 'Your order is placed successfully');
         navigation.navigate('HomeScreen');
       }

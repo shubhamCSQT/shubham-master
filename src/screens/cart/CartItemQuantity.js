@@ -22,7 +22,7 @@ const CartItemQuantity = ({ cartItem, customerCartId, removeItemTrigger }) => {
     );
     const response = resp.data;
     if (response) {
-      dispatch(getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`))
+      dispatch(getCustomerCartItems(`sfcc/cartDetail/${customerCartId}`))
         .then(res => {
           if (res.payload.status === 200) {
             console.log('carts api call successful');

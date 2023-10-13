@@ -19,7 +19,6 @@ const AddressScreen = () => {
     state =>
       state?.getCustomerDetailsApiSlice?.customerDetails?.data?.userProfile,
   );
-  console.log('userAddresses: ', userAddresses);
 
   return (
     <>

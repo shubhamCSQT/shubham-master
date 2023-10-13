@@ -39,6 +39,7 @@ const ProductDetailsScreen = props => {
   const productDetails = useSelector(
     state => state?.getProductDetailsApiSlice?.productDetails?.data || [],
   );
+  console.log('productDetails: ', productDetails?.skus);
 
   const basketId = useSelector(
     state =>
@@ -84,18 +85,18 @@ const ProductDetailsScreen = props => {
         if (response?.status == 401) {
           Alert.alert('Unauthorize', 'Your session is expired , Please login!');
           navigation.navigate('LoginScreen');
-        } else if (response.status == 200) {
-          dispatch(
-            getCustomerCartItems(`sfcc/getCartDetails/${basketId}`),
-          ).then(res => {
-            if (res.payload.status === 200) {
-              console.log('carts api call successful');
-              setIsLoading(false);
-            } else {
-              setIsLoading(false);
-              console.log('carts api call not successful');
-            }
-          });
+        } else if (response.status == 201) {
+          dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`)).then(
+            res => {
+              if (res.payload.status === 200) {
+                console.log('carts api call successful');
+                setIsLoading(false);
+              } else {
+                setIsLoading(false);
+                console.log('carts api call not successful');
+              }
+            },
+          );
           Alert.alert('Product Added to cart');
         } else {
           setIsLoadingAddToCart(false);
@@ -118,8 +119,6 @@ const ProductDetailsScreen = props => {
       setIsLoading(false);
     });
   }, [productId]);
-
-  console.log('imageCarousel: ', imageCarousel);
 
   useEffect(() => {
     if (

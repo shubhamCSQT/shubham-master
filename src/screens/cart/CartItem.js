@@ -27,9 +27,7 @@ const CartItem = ({ item }) => {
       .Delete(`sfcc/removeItem/${customerCartId}`, req)
       .then(res => {
         if (res?.data?.status == 200) {
-          dispatch(
-            getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`),
-          )
+          dispatch(getCustomerCartItems(`sfcc/cartDetail/${customerCartId}`))
             .then(res => {
               if (res.payload.status === 200) {
                 setIsLoading(false);

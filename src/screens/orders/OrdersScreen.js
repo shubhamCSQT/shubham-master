@@ -22,7 +22,6 @@ const OrderScreen = () => {
   const customerOrders = useSelector(
     state => state?.getOrdersDataApiSlice?.ordersData?.data || [],
   );
-
   const renderItem = ({ item }) => {
     return (
       <Box
