@@ -61,6 +61,8 @@ const ProductDetailsScreen = props => {
   const [imageCarousel, setImageCarousel] = useState([]);
   const [isLoadingAddToCart, setIsLoadingAddToCart] = useState(false);
   const [productImage, setProductImage] = useState('');
+  console.log('isUserLoggedIn: ', isUserLoggedIn);
+  console.log('basketId: ', basketId);
   const onPressAddToCart = () => {
     setIsLoadingAddToCart(true);
     if (isUserLoggedIn && basketId) {

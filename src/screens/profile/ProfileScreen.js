@@ -6,6 +6,7 @@ import LoginScreen from '../auth/LoginScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import config, { ENV } from '@/config';
+import CommonSearchHeader from '@/components/CommonSearchHeader/CommonSearchHeader';
 
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
@@ -79,6 +80,7 @@ export default function ProfileScreen() {
       {true ? (
         <>
           <Box flex={1}>
+            <CommonSearchHeader />
             <FlatList
               data={dataArray}
               renderItem={renderItem}

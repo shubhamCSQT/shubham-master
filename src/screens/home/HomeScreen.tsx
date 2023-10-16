@@ -4,7 +4,8 @@ import { Box } from '@/atoms';
 import ContentFullSection from './contentFull/ContentFullSection';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NewArrivals from './newArrival/NewArrivals';
-import BestSellingProducts from './bestSellingProducts/BestSellingProducts';
+import CommonSearchHeader from '@/components/CommonSearchHeader/CommonSearchHeader';
+
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
 
@@ -29,6 +30,7 @@ const HomeScreen = () => {
 
   return (
     <Box flex={1} backgroundColor="white">
+      <CommonSearchHeader />
       <FlatList
         data={ViewData}
         renderItem={renderHomeItems}

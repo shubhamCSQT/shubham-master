@@ -32,10 +32,10 @@ const ContentFullSection = () => {
           backgroundColor="white"
           borderRadius={8}
           // flex={1}
-          shadowColor="black"
-          shadowOpacity={0.1}
-          shadowRadius={10}
-          elevation={7}
+          // shadowColor="black"
+          // shadowOpacity={0.1}
+          // shadowRadius={10}
+          // elevation={7}
         >
           {/* <ImageBackground source={{uri: item.url}} style={styles.itemContainer}>
           <Box flex={1} justifyContent="flex-end" mb="s40">

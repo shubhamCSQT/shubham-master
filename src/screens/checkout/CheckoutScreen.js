@@ -87,7 +87,7 @@ const CheckoutScreen = props => {
       };
 
       const confirmOrder = await api.post(`sfcc/placeOrder`, reqBody);
-      if (confirmOrder?.data?.status == 201) {
+      if (confirmOrder?.data?.status === 201) {
         dispatch(createCustomerBasket(`sfcc/createCart`));
         dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
         dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`));

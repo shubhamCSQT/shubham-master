@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCollections } from '@/redux/collectionsApi/CollectionsApiAsyncThunk';
-import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import { Box, Text, theme } from '@/atoms';
+import CommonSearchHeader from '@/components/CommonSearchHeader/CommonSearchHeader';
 
 const CollectionsScreen = () => {
   const navigation = useNavigation();
@@ -124,12 +124,12 @@ const CollectionsScreen = () => {
   };
 
   return (
-    <>
-      {/* <CommonHeader title="Collections" showCartIcon={true} searchIcon={true} /> */}
+    <Box flex={1} backgroundColor="white">
+      <CommonSearchHeader />
       <Box
         flex={1}
         paddingHorizontal="paddingHorizontal"
-        pt="s8"
+        pt="s16"
         backgroundColor="background"
       >
         <Box paddingBottom="s16">
@@ -149,7 +149,7 @@ const CollectionsScreen = () => {
           }
         />
       </Box>
-    </>
+    </Box>
   );
 };
 

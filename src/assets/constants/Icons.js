@@ -6,6 +6,7 @@ export const wishlistIcon = require('../icons/wishlist.png');
 export const addedToWishlistIcon = require('../icons/addedToWishlist.png');
 export const sushittoIcon = require('../icons/sushittoIcon.png');
 export const collectionsIcon = require('../icons/collections.png');
+export const searchIcon = require('../icons/search.png');
 
 export default {
   homeIcon,
@@ -16,4 +17,5 @@ export default {
   addedToWishlistIcon,
   sushittoIcon,
   collectionsIcon,
+  searchIcon,
 };
