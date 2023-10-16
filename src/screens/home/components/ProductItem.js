@@ -6,6 +6,7 @@ import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
+  console.log('item: ', item);
   const navigation = useNavigation();
 
   return (
@@ -35,7 +36,7 @@ const ProductItem = React.memo(({ item }) => {
             color="darkText"
             numberOfLines={2}
           >
-            {item?.ProductName || item?.product_name}
+            {item?.ProductName || item?.product_name || item?.name}
           </Text>
         </Box>
         <Box

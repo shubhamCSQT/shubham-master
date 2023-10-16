@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Text, theme } from '@atoms';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LoginScreen from '../auth/LoginScreen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import config, { ENV } from '@/config';
 
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
+
   const { isUserLoggedIn } = useIsUserLoggedIn();
+
+  const IS_SFCC = config.app.isSfcc;
+  console.log('IS_SFCC: ', IS_SFCC);
+  const IS_SPRYKER = config.app.isSpryker;
+  console.log('IS_SPRYKER: ', IS_SPRYKER);
+  const IS_VTEX = config.app.isVtex;
+  console.log('IS_VTEX: ', IS_VTEX);
+
+  const baseUrl = config.baseUrl.default;
 
   const dataArray = [
     {
