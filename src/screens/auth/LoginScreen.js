@@ -41,6 +41,7 @@ export default function LoginScreen(props) {
     const response = await commonApi.post('sfcc/login', apiData, {
       'Content-Type': 'Application/json',
     });
+    console.log('response: ', response);
 
     if (response.data?.status === 201) {
       console.log('HERE');

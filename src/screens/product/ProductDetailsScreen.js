@@ -27,6 +27,7 @@ import axios from 'axios';
 import { applicationProperties } from '@/utils/application.properties';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import { storage } from '@/store';
+import config from '@/config';
 const ProductDetailsScreen = props => {
   const customerId = storage.getString('customerId');
   console.log('customerId: ', customerId);
@@ -113,9 +114,12 @@ const ProductDetailsScreen = props => {
     };
     getToken();
   }, []);
+
   useEffect(() => {
     setIsLoading(true);
-    dispatch(getProductDetails(`sfcc/product-by-id/${productId}`)).then(() => {
+    dispatch(
+      getProductDetails(`${config.productsDetailsById}/${productId}`),
+    ).then(() => {
       setIsLoading(false);
     });
   }, [productId]);
@@ -194,7 +198,9 @@ const ProductDetailsScreen = props => {
                 /> */}
                   <CarouselCards images={imageCarousel} crosSelling={null} />
                   <Box>
-                    <Text variant="bold24">{productDetails.name}</Text>
+                    <Text variant="bold24">
+                      {productDetails?.name || productDetails?.Name}
+                    </Text>
                     <Text variant="bold16" mt="s6">
                       ${productDetails?.skus?.[0]?.bestPrice}
                     </Text>

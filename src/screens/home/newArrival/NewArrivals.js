@@ -5,6 +5,7 @@ import { Box, Text, theme } from '@atoms';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNewArrival } from '@/redux/newArrivalApi/NewArrivalApiAsyncThunk';
 import ProductItem from '../components/ProductItem';
+import config from '@/config';
 const NewArrivals = () => {
   const dispatch = useDispatch();
 
@@ -18,8 +19,13 @@ const NewArrivals = () => {
     return <ProductItem item={item} key={index} />;
   }, []);
 
+  console.log(
+    'config.collections.newArrivals: ',
+    config.collections.newArrivals,
+  );
   useEffect(() => {
-    dispatch(getNewArrival('sfcc/new-arrivals'));
+    // dispatch(getNewArrival('sfcc/new-arrivals'));
+    dispatch(getNewArrival(config.collections.newArrivals));
   }, []);
 
   return (
