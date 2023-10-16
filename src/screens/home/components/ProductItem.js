@@ -7,7 +7,6 @@ import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
   const navigation = useNavigation();
-
   return (
     <Box marginHorizontal="s4" flexShrink={1} mb="s12" flex={1}>
       <TouchableOpacity

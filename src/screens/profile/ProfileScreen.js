@@ -22,12 +22,20 @@ export default function ProfileScreen() {
     },
     {
       name: 'Your Orders',
-      onPress: function () {},
+      onPress: function () {
+        isUserLoggedIn
+          ? navigation.navigate('OrdersScreen')
+          : navigation.navigate('LoginScreen');
+      },
     },
 
     {
-      name: 'Add Address',
-      onPress: function () {},
+      name: 'My Address',
+      onPress: function () {
+        isUserLoggedIn
+          ? navigation.navigate('AddressScreen')
+          : navigation.navigate('LoginScreen');
+      },
     },
   ];
 

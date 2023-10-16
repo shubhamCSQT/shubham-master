@@ -42,7 +42,7 @@ export default function LoginScreen(props) {
       'Content-Type': 'Application/json',
     });
 
-    if (response.data?.status === 200) {
+    if (response.data?.status === 201) {
       console.log('HERE');
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
       dispatch(createCustomerBasket(`sfcc/createCart`));

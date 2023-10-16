@@ -33,6 +33,8 @@ const CartScreen = () => {
         ?.basket_id,
   );
 
+  console.log('customerCartId: ', customerCartId);
+
   const customerCartItems = useSelector(
     state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data,
   );
@@ -42,17 +44,17 @@ const CartScreen = () => {
   };
 
   useEffect(() => {
-    dispatch(
-      getCustomerCartItems(`sfcc/getCartDetails/${customerCartId}`),
-    ).then(res => {
-      if (res.payload.status === 200) {
-        console.log('carts api call successful');
-        setIsLoading(false);
-      } else {
-        setIsLoading(false);
-        console.log('carts api call not successful');
-      }
-    });
+    dispatch(getCustomerCartItems(`sfcc/cartDetail/${customerCartId}`)).then(
+      res => {
+        if (res.payload.status === 200) {
+          console.log('carts api call successful');
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          console.log('carts api call not successful');
+        }
+      },
+    );
   }, []);
 
   const ListEmptyComponent = () => {
@@ -97,7 +99,7 @@ const CartScreen = () => {
                       }
                       scrollEnabled={false}
                     />
-                    {customerCartItems?.totalizers?.Items > 0 ? (
+                    {/* {customerCartItems?.totalizers?.Items > 0 ? (
                       <>
                         <Box
                           justifyContent="flex-end"
@@ -122,11 +124,6 @@ const CartScreen = () => {
                             Tax Included : ${customerCartItems?.totalizers?.Tax}
                           </Text>
                         </Box>
-                        {/* <Box justifyContent="flex-end" flexDirection="row">
-                          <Text>
-                            Tax Included : $
-                          </Text>
-                        </Box> */}
                         <Box
                           justifyContent="flex-end"
                           flexDirection="row"
@@ -139,7 +136,7 @@ const CartScreen = () => {
                       </>
                     ) : (
                       <></>
-                    )}
+                    )} */}
                   </Box>
                 </ScrollView>
               </>
