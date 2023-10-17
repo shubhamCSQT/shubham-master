@@ -150,7 +150,7 @@ const CartScreen = () => {
           </>
         )}
       </Box>
-      {customerCartItems?.products?.length != undefined ? (
+      {customerCartItems?.products?.length && isUserLoggedIn ? (
         <>
           <Box
             padding="s16"

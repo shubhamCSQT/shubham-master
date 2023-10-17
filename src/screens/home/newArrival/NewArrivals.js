@@ -19,10 +19,6 @@ const NewArrivals = () => {
     return <ProductItem item={item} key={index} />;
   }, []);
 
-  console.log(
-    'config.collections.newArrivals: ',
-    config.collections.newArrivals,
-  );
   useEffect(() => {
     // dispatch(getNewArrival('sfcc/new-arrivals'));
     dispatch(getNewArrival(config.collections.newArrivals));
