@@ -11,8 +11,6 @@ import {
 
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
-import ShipmentAddress from './ShipmentAddress';
-import ShippingMethod from './ShippingMethod';
 import { useNavigation } from '@react-navigation/native';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +24,7 @@ const CheckoutScreen = props => {
   const [checkoutDetails, setCheckoutDetails] = useState(null);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOrderConfirm, setIsOrderConfirm] = useState(false);
   const [selectedShippmentIndex, setSelectedShippmentIndex] = useState(0);
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -75,19 +74,16 @@ const CheckoutScreen = props => {
         `sfcc/new_shippment_method/${basketId}?shipment_id=me`,
         reqBodyShippment,
       );
-      console.log('response: ', response?.data?.data);
-
       const shippment_address = await api.put(
         `sfcc/new_shipping_address/${basketId}?shipment_id=me`,
         reqBody,
       );
-      console.log('shippment_address: ', shippment_address?.data?.data);
-
       const billingAddress = await api.put(
         `sfcc/new_billing_address/${basketId}`,
         reqBody,
       );
-      console.log('billingAddress: ', billingAddress?.data?.data);
+      setCheckoutDetails(billingAddress?.data?.data);
+
       const reqBodyPayment = {
         payment_card: {
           card_type: 'Visa',
@@ -102,98 +98,33 @@ const CheckoutScreen = props => {
           valid_from_month: 4,
           valid_from_year: 21,
         },
-        amount: 100000,
+        amount: billingAddress?.data?.data?.amount,
         payment_method_id: 'CREDIT_CARD',
       };
       const confirmPayment = await api.post(
         `sfcc/confirmPayment/${basketId}`,
         reqBodyPayment,
       );
-      console.log('confirmPayment: ', confirmPayment?.data?.data);
 
       setIsLoading(false);
     };
     shipment();
   }, [basketId, selectedAddressIndex, selectedShippmentIndex]);
 
-  // useEffect(() => {
-  //   const shipment = async () => {
-  //     const reqBodyPayment = {
-  //       payment_card: {
-  //         card_type: 'Visa',
-  //         credit_card_expired: false,
-  //         credit_card_token: '123',
-  //         expiration_month: 8,
-  //         expiration_year: 2024,
-  //         holder: 'shubham verma',
-  //         issue_number: '123',
-  //         number: '411111111111',
-  //         security_code: '123',
-  //         valid_from_month: 4,
-  //         valid_from_year: 21,
-  //       },
-  //       amount: 100000,
-  //       payment_method_id: 'CREDIT_CARD',
-  //     };
-  //     const confirmPayment = await api.post(
-  //       `sfcc/confirmPayment/${basketId}`,
-  //       reqBodyPayment,
-  //     );
-  //     console.log('confirmPayment: ', confirmPayment?.data?.data);
-
-  //     const reqBodyShippment = {
-  //       id: shippmentMethods[selectedShippmentIndex]?.id,
-  //     };
-
-  //     const response = await api.put(
-  //       `sfcc/new_shippment_method/${basketId}`,
-  //       reqBodyShippment,
-  //     );
-
-  //     console.log('response: ', response?.data?.data);
-  //   };
-  //   shipment();
-  // }, [basketId, selectedShippmentIndex]);
-
   const orderConfirm = async () => {
-    // const reqBody = {
-    //   payment_card: {
-    //     card_type: 'Visa',
-    //     credit_card_expired: false,
-    //     credit_card_token: '123',
-    //     expiration_month: 8,
-    //     expiration_year: 2024,
-    //     holder: holderName,
-    //     issue_number: '123',
-    //     number: '411111111111',
-    //     security_code: '123',
-    //     valid_from_month: 4,
-    //     valid_from_year: 21,
-    //   },
-    //   amount: '',
-    //   payment_method_id: 'CREDIT_CARD',
-    // };
-    // const confirmPayment = await api.post(
-    //   `sfcc/confirmPayment/${basketId}`,
-    //   reqBody,
-    // );
-
-    // if (confirmPayment?.data?.status == 401) {
-    //   Alert.alert('Unauthorised', 'Your session is expired , Please login!');
-    //   navigation.navigate('LoginScreen');
-    // }
+    setIsOrderConfirm(true);
     const reqBody = {
       basket_id: basketId,
     };
     const confirmOrder = await api.post(`sfcc/placeOrder`, reqBody);
-    console.log('confirmOrder: ', confirmOrder?.data?.data);
     if (confirmOrder?.data?.status == 200) {
       dispatch(createCustomerBasket(`sfcc/createCart`));
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
       dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`));
       Alert.alert('Order Placed', 'Your order is placed successfully');
-      navigation.navigate('HomeScreen');
+      navigation.navigate('OrdersScreen');
     }
+    setIsOrderConfirm(false);
   };
 
   return (
@@ -229,25 +160,42 @@ const CheckoutScreen = props => {
                   />
                   {/* <ShippingMethod checkoutDetails={checkoutDetails} /> */}
                 </Box>
-                {/* <Box style={styles.borderBox}>
+                <Box style={styles.borderBox}>
                   <Text variant="bold14">Order Summary</Text>
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text>Subtotal</Text>
-                    <Text>$ {checkoutDetails?.product_sub_total}</Text>
+                    {checkoutDetails?.product_sub_total ? (
+                      <Text>$ {checkoutDetails?.product_sub_total}</Text>
+                    ) : (
+                      ''
+                    )}
                   </Box>
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text>Shipping</Text>
-                    <Text>$ {checkoutDetails?.shipping_total}</Text>
+                    {checkoutDetails?.shipping_total ? (
+                      <Text>$ {checkoutDetails?.shipping_total}</Text>
+                    ) : (
+                      ''
+                    )}
                   </Box>
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text>Sales Tax</Text>
-                    <Text>$ {checkoutDetails?.tax_total}</Text>
+
+                    {checkoutDetails?.tax_total ? (
+                      <Text>$ {checkoutDetails?.tax_total}</Text>
+                    ) : (
+                      ''
+                    )}
                   </Box>
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text variant="bold14">Total</Text>
-                    <Text>$ {checkoutDetails?.order_total}</Text>
+                    {checkoutDetails?.order_total ? (
+                      <Text>$ {checkoutDetails?.order_total}</Text>
+                    ) : (
+                      ''
+                    )}
                   </Box>
-                </Box> */}
+                </Box>
               </Box>
             </>
           ) : (
@@ -261,7 +209,10 @@ const CheckoutScreen = props => {
           style={theme.cardVariants.bottomButtonShadow}
           backgroundColor="white"
         >
-          <CommonSolidButton title="Place Order" onPress={orderConfirm} />
+          <CommonSolidButton
+            title={isOrderConfirm ? 'Loading' : 'Place Order'}
+            onPress={!isOrderConfirm ? orderConfirm : () => {}}
+          />
         </Box>
       </Box>
     </SafeAreaView>

@@ -26,9 +26,13 @@ const CartItem = ({ item }) => {
     const response = await api
       .Delete(`sfcc/removeItem/${customerCartId}`, req)
       .then(res => {
-        if (res?.data?.status == 200) {
+        console.log('res?.data?.status1: ', res?.data?.status);
+
+        if (res?.data?.status == 204) {
           dispatch(getCustomerCartItems(`sfcc/cartDetail/${customerCartId}`))
             .then(res => {
+              console.log('res.payload.status2: ', res.payload.status);
+
               if (res.payload.status === 200) {
                 setIsLoading(false);
               } else {
