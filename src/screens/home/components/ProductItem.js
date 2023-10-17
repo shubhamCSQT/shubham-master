@@ -6,7 +6,6 @@ import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
 
 const ProductItem = React.memo(({ item }) => {
-  console.log('item: ', item);
   const navigation = useNavigation();
   return (
     <Box marginHorizontal="s4" flexShrink={1} mb="s12" flex={1}>

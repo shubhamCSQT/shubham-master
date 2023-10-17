@@ -27,6 +27,7 @@ import getCustomerBasketApiSlice from '../redux/basket/BasketApiSlice';
 import createCustomerBasketSlice from '../redux/createBasketApi/CreateBasketApiSlice'
 import getCustomerCartItemsAliSlice from '../redux/cartItemsApi/CartItemsSlice'
 import getOrdersDataApiSlice from '../redux/ordersApi/OrdersApiSlice';
+import getShippmentMethodsApiSlice from '../redux/shippmentMethodApi/ShippmentMethodApiSlice';
 const reducers = combineReducers({
   theme,
   createCustomerBasketSlice,
@@ -40,6 +41,7 @@ const reducers = combineReducers({
   getCollectionsApiSlice,
   getProductsBySubCategoryApiSlice,
   getOrdersDataApiSlice,
+  getShippmentMethodsApiSlice,
   [api.reducerPath]: api.reducer,
 });
 
