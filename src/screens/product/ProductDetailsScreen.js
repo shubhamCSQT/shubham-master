@@ -67,7 +67,7 @@ const ProductDetailsScreen = props => {
         userToken = await Keychain.getGenericPassword();
 
         let response = await axios.post(
-          applicationProperties.baseUrl + `sfcc/add-items/${basketId}`,
+          applicationProperties.baseUrl + `sfcc/addItem/${basketId}`,
           {
             itemId: selectedSkuId,
             quantity: 1,
