@@ -27,7 +27,7 @@ const ContentFullSection = () => {
     return (
       <Box>
         <Box
-          marginVertical="s20"
+          marginVertical="s10"
           marginHorizontal="paddingHorizontal"
           backgroundColor="white"
           borderRadius={8}

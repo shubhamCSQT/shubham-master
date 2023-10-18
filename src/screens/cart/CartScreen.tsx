@@ -160,7 +160,7 @@ const CartScreen = () => {
             <CommonSolidButton
               title="Proceed to Checkout"
               onPress={() =>
-                navigation.replace('CheckoutScreen', {
+                navigation.navigate('CheckoutScreen', {
                   basketId: customerCartId,
                 })
               }

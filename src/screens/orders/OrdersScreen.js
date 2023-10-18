@@ -109,11 +109,7 @@ const OrderScreen = () => {
   }, []);
   return (
     <>
-      <CommonHeader
-        title={'Order List'}
-        searchIcon={true}
-        showCartIcon={true}
-      />
+      <CommonHeader title={'Order List'} showCartIcon={true} />
       <ScrollView
         flex={1}
         backgroundColor="white"

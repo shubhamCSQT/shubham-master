@@ -4,15 +4,22 @@ import React from 'react';
 import { Text, Box } from '@/atoms';
 import Icons from '@/assets/constants/Icons';
 import { IS_IOS } from '@/utils/appUtils';
+import { useNavigation } from '@react-navigation/native';
 
 const CommonSearchHeader = () => {
+  const navigation = useNavigation();
+
+  const onPressCart = () => {
+    navigation.navigate('CartScreen');
+  };
+
   return (
     <Box paddingHorizontal="s16" backgroundColor="white">
       <Box
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        pt="s8"
+        paddingVertical="s8"
       >
         <TouchableOpacity style={{ flex: 1, height: 32 }}>
           <Box
@@ -38,7 +45,7 @@ const CommonSearchHeader = () => {
               <Image source={Icons.wishlistIcon} style={styles.wishlistIcon} />
             </Box>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressCart}>
             <Box>
               <Image source={Icons.cartIcon} style={styles.wishlistIcon} />
             </Box>

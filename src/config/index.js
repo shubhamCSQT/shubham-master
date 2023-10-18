@@ -9,10 +9,9 @@ const environments = {
     },
     collections: {
       newArrivals: 'vtex-new-arrivals',
-      bestSelling: 'spryker-best-selling-products',
+      bestSelling: 'vtex/best-selling-products',
     },
     productsDetailsById: 'get-vtex-product-by-id',
-    // productsDetailsById: 'get-a-product-by-id',
   },
   spryker: {
     baseUrl: {
@@ -20,8 +19,7 @@ const environments = {
     },
     collections: {
       newArrivals: 'spryker/new-arrivals',
-      bestSelling: 'spryker-best-selling-products',
-      // newArrivals: 'spryker-best-selling-products',
+      bestSelling: 'spryker/best-selling-products',
     },
     productsDetailsById: 'get-a-product-by-id',
   },
@@ -31,7 +29,7 @@ const environments = {
     },
     collections: {
       newArrivals: 'sfcc/new-arrivals',
-      bestSelling: 'spryker-best-selling-products',
+      bestSelling: 'sfcc/best-selling-products',
     },
     productsDetailsById: 'sfcc/product-by-id',
   },
@@ -48,6 +46,7 @@ export default {
   },
   collections: {
     newArrivals: environments[ENV].collections.newArrivals,
+    bestSelling: environments[ENV].collections.bestSelling,
   },
   productsDetailsById: environments[ENV].productsDetailsById,
 };

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
@@ -17,11 +17,13 @@ import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { customerId } from '@/utils/appUtils';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
 import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
+import { AuthContext } from './MainNavigator';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
   const { isUserLoggedIn } = useIsUserLoggedIn();
+  const { signOut } = useContext(AuthContext);
 
   const dispatch = useDispatch();
 
@@ -33,13 +35,23 @@ export default function BottomTabNavigator() {
   useEffect(() => {
     console.log('isUserLoggedIn: ', isUserLoggedIn);
 
-    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-    dispatch(createCustomerBasket(`sfcc/createCart`));
+    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
+      res => {
+        if (res.payload.data.status === 401) {
+          signOut();
+        }
+      },
+    );
+    dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
+      if (res.payload.data.status === 401) {
+        signOut();
+      }
+    });
     // if (isUserLoggedIn) {
     // }
     // if(customerBasket?.total===0){
     // }
-  }, [isUserLoggedIn]);
+  }, []);
 
   useEffect(() => {
     dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(

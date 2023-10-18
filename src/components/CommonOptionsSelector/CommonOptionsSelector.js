@@ -49,29 +49,13 @@ const CommonOptionsSelector = ({
             size={20}
           />
           <Box width={'100%'} flexShrink={1} justifyContent="center">
-            {item.firstName != undefined ? (
-              <>
-                <Text variant="bold14" lineHeight={20} numberOfLines={2}>
-                  {item?.firstName}
-                </Text>
-                <Text
-                  variant="regular14LightBlack"
-                  lineHeight={20}
-                  numberOfLines={2}
-                >
-                  {item.title}
-                </Text>
-              </>
-            ) : (
-              <Text
-                variant="regular14LightBlack"
-                lineHeight={20}
-                numberOfLines={2}
-                // fontWeight="700"
-              >
-                {item.title || item?.name}
-              </Text>
-            )}
+            <Text
+              variant="regular14LightBlack"
+              lineHeight={20}
+              numberOfLines={2}
+            >
+              {item.title}
+            </Text>
           </Box>
         </Box>
       </TouchableOpacity>
@@ -81,14 +65,11 @@ const CommonOptionsSelector = ({
   const renderItem = ({ item }) => <Item item={item} />;
 
   const addOptions = DATA?.map((item, index) => {
+    console.log('DATA: ', DATA);
     return {
-      title: item.title,
-      subTitle: item.subTitle,
+      title: item.firstName || item.name,
       isSelected: index === selectedIndex ? true : false,
       index: index,
-      firstName: item?.firstName,
-      type: item?.type,
-      name: item?.name,
     };
   });
 

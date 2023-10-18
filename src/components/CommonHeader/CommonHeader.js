@@ -17,6 +17,7 @@ const CommonHeader = ({
 }) => {
   const navigation = useNavigation();
 
+
   const customerCartItems = useSelector(
     state => state?.getCustomerCartItemsAliSlice?.customerCartItems?.data,
   );

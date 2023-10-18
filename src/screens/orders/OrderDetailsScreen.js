@@ -2,16 +2,14 @@ import { Text, Box, theme } from '@/atoms';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import React from 'react';
 import {
-  ActivityIndicator,
   FlatList,
-  SafeAreaView,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import OrderItem from './components/OrderItem';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 const OrderDetailsScreen = props => {
   const orderData = props?.route?.params?.orderData;
+
   return (
     <>
       <CommonHeader

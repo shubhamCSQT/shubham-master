@@ -8,7 +8,6 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
 import CommonSolidButton from '@/components/CommonSolidButton/CommonSolidButton';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +18,10 @@ import { customerId } from '@/utils/appUtils';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import CommonOptionsSelector from '@/components/CommonOptionsSelector/CommonOptionsSelector';
 import { getShippmentMethods } from '@/redux/shippmentMethodApi/ShippmentMethodApiAsyncThunk';
+
 const CheckoutScreen = props => {
+  const navigation = useNavigation();
+
   const basketId = props.route.params?.basketId;
   const [checkoutDetails, setCheckoutDetails] = useState(null);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
@@ -27,7 +29,6 @@ const CheckoutScreen = props => {
   const [isOrderConfirm, setIsOrderConfirm] = useState(false);
   const [selectedShippmentIndex, setSelectedShippmentIndex] = useState(0);
   const [flag, setFlag] = useState(false);
-  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const ADDRESSES_DATA = useSelector(
@@ -126,12 +127,12 @@ const CheckoutScreen = props => {
       basket_id: basketId,
     };
     const confirmOrder = await api.post(`sfcc/placeOrder`, reqBody);
-    if (confirmOrder?.data?.status == 200) {
+    if (confirmOrder?.data?.status === 200) {
       dispatch(createCustomerBasket(`sfcc/createCart`));
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
       dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`));
       Alert.alert('Order Placed', 'Your order is placed successfully');
-      navigation.navigate('OrdersScreen');
+      navigation.replace('OrdersScreen');
     }
     setIsOrderConfirm(false);
   };

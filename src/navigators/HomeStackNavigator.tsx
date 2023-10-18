@@ -10,6 +10,11 @@ import PersonalDetailsScreen from '@/screens/profile/PersonalDetailsScreen';
 import CartScreen from '@/screens/cart/CartScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 import CheckoutScreen from '@/screens/checkout/CheckoutScreen';
+import OrderScreen from '@/screens/orders/OrdersScreen';
+import OrderDetailsScreen from '@/screens/orders/OrderDetailsScreen';
+import ViewAddress from '@/screens/address/components/ViewAddress';
+import AddAddress from '@/screens/address/components/AddAddress';
+import AddressScreen from '@/screens/address/AddressScreen';
 const Stack = createStackNavigator();
 
 const HomeStackNavigator = () => {
@@ -34,6 +39,13 @@ const HomeStackNavigator = () => {
 
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+
+      <Stack.Screen name="OrdersScreen" component={OrderScreen} />
+      <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+
+      <Stack.Screen name="ViewAddress" component={ViewAddress} />
+      <Stack.Screen name="AddAddress" component={AddAddress} />
+      <Stack.Screen name="AddressScreen" component={AddressScreen} />
     </Stack.Navigator>
   );
 };
