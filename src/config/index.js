@@ -7,31 +7,22 @@ const environments = {
     baseUrl: {
       default: 'http://103.113.36.20:9005/',
     },
-    collections: {
-      newArrivals: 'vtex-new-arrivals',
-      bestSelling: 'vtex/best-selling-products',
-    },
-    productsDetailsById: 'get-vtex-product-by-id',
+    productsDetailsById: 'vtex/product-by-id',
+    addToCart: 'vtex/additem',
   },
   spryker: {
     baseUrl: {
       default: 'http://103.113.36.20:9005/',
     },
-    collections: {
-      newArrivals: 'spryker/new-arrivals',
-      bestSelling: 'spryker/best-selling-products',
-    },
-    productsDetailsById: 'get-a-product-by-id',
+    productsDetailsById: 'spryker/product-by-id',
+    addToCart: 'spryker/addItems',
   },
   sfcc: {
     baseUrl: {
       default: 'http://103.113.36.20:9005/',
     },
-    collections: {
-      newArrivals: 'sfcc/new-arrivals',
-      bestSelling: 'sfcc/best-selling-products',
-    },
     productsDetailsById: 'sfcc/product-by-id',
+    addToCart: 'sfcc/addItem',
   },
 };
 
@@ -45,8 +36,14 @@ export default {
     default: environments[ENV].baseUrl.default,
   },
   collections: {
-    newArrivals: environments[ENV].collections.newArrivals,
-    bestSelling: environments[ENV].collections.bestSelling,
+    newArrivals: `${ENV}/new-arrivals`,
+    bestSelling: `${ENV}/best-selling-products`,
   },
-  productsDetailsById: environments[ENV].productsDetailsById,
+  productsDetailsById: `${ENV}/product-by-id`,
+  addToCartUrl: environments[ENV].addToCart,
+  categoryTreeUrl: `${ENV}/category-tree`,
+  productsByCategory: `${ENV}/products-by-category`,
+  productsBySubCategory: `${ENV}/products-by-sub-category`,
+  createCartUrl: `${ENV}/createCart`,
+  loginUrl: `${ENV}/login`,
 };

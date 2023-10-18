@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import * as Keychain from 'react-native-keychain';
-
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
 import CarouselCards from '@/components/imageCarousel/CarouselCards';
@@ -27,10 +26,10 @@ import axios from 'axios';
 import { applicationProperties } from '@/utils/application.properties';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import { storage } from '@/store';
-import config from '@/config';
+import config, { ENV } from '@/config';
+
 const ProductDetailsScreen = props => {
   const customerId = storage.getString('customerId');
-
   const { width } = useWindowDimensions();
   const { isUserLoggedIn } = useIsUserLoggedIn();
   const navigation = useNavigation();
@@ -67,7 +66,7 @@ const ProductDetailsScreen = props => {
         userToken = await Keychain.getGenericPassword();
 
         let response = await axios.post(
-          applicationProperties.baseUrl + `sfcc/addItem/${basketId}`,
+          applicationProperties.baseUrl + `${config.addToCartUrl}/${basketId}`,
           {
             itemId: selectedSkuId,
             quantity: 1,

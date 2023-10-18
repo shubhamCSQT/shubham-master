@@ -8,28 +8,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductsApiAsyncThunk } from '@/redux/productsApi/ProductsApiAsyncThunk';
 // import ProductItem from '@/components/product/ProductItem';
 import CommonHeader from '@/components/CommonHeader/CommonHeader';
-import ProductItem from '@/screens/home/components/ProductItem';
+import ProductItem from '@/components/ProductItem/ProductItem';
+import config from '@/config';
 
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const categoryId = props.route?.params?.item?.Id;
+  const categoryId = props.route?.params?.item?.parent_Id;
   const categoryName = props.route?.params?.item?.name;
   const isCategoryTrue = props.route?.params?.isCategoryTrue;
   const categoryEndPoint = isCategoryTrue
-    ? 'products-by-category'
-    : 'products-by-sub-category';
+    ? config.productsByCategory
+    : config.productsBySubCategory;
 
   const dispatch = useDispatch();
 
   const productsByCategory = useSelector(
     state =>
       state?.getProductsByCategoryApiSlice?.productsByCategory?.data
-        ?.ProductData,
+        ?.productData,
   );
+  console.log('productsByCategory: ', productsByCategory);
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(ProductsApiAsyncThunk(`sfcc/${categoryEndPoint}/${categoryId}`))
+    dispatch(ProductsApiAsyncThunk(`${categoryEndPoint}/${categoryId}`))
       .then(() => setIsLoading(false))
       .catch(error => {
         console.error('Error fetching products:', error);

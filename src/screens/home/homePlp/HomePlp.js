@@ -2,7 +2,7 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { Box, Text, theme } from '@atoms';
-import ProductItem from '../components/ProductItem';
+import ProductItem from '../../../components/ProductItem/ProductItem';
 
 const HomePlp = ({ productList, listTitle }) => {
 

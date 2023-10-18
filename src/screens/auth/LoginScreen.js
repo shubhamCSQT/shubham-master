@@ -21,6 +21,7 @@ import SignUpScreen from './SignUpScreen';
 import { reduxStorage } from '@/store';
 import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
+import config from '@/config';
 
 export default function LoginScreen(props) {
   const dispatch = useDispatch();
@@ -38,15 +39,14 @@ export default function LoginScreen(props) {
       email: userEmail,
       password: password,
     };
-    const response = await commonApi.post('sfcc/login', apiData, {
+    const response = await commonApi.post(config.loginUrl, apiData, {
       'Content-Type': 'Application/json',
     });
-    console.log('response: ', response);
 
     if (response.data?.status === 201) {
       console.log('HERE');
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
-      dispatch(createCustomerBasket(`sfcc/createCart`));
+      dispatch(createCustomerBasket(`${config.createCartUrl}`));
       // await AsyncStorage.setItem(
       //   'tokenExpiry',
       //   response?.data?.data?.validation?.authCookie?.Value,

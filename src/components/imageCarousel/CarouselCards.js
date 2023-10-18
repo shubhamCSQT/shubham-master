@@ -5,6 +5,7 @@ import { SLIDER_WIDTH, CarouselCardItem, ITEM_WIDTH } from './CarouselCardItem';
 import data from './data';
 import { Box } from '@/atoms';
 import { CarouselCrossSellingProducts } from './CarouselCrossSellingProducts';
+
 const CarouselCards = ({ images, crosSelling }) => {
   const [index, setIndex] = React.useState(0);
   const isCarousel = React.useRef(null);

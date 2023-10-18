@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCollections } from '@/redux/collectionsApi/CollectionsApiAsyncThunk';
 import { Box, Text, theme } from '@/atoms';
 import CommonSearchHeader from '@/components/CommonSearchHeader/CommonSearchHeader';
+import config from '@/config';
 
 const CollectionsScreen = () => {
   const navigation = useNavigation();
@@ -31,8 +32,7 @@ const CollectionsScreen = () => {
   const firstItem = categories?.[0]?.Id || null;
 
   useEffect(() => {
-    // dispatch(getCollections('get-vtex-category-tree'));
-    dispatch(getCollections('sfcc/category-tree'));
+    dispatch(getCollections(config.categoryTreeUrl));
   }, []);
 
   const handleItemPress = parent_Id => {

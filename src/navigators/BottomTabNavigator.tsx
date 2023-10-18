@@ -18,6 +18,7 @@ import { customerId } from '@/utils/appUtils';
 import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
 import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
 import { AuthContext } from './MainNavigator';
+import config from '@/config';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ export default function BottomTabNavigator() {
         }
       },
     );
-    dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
+    dispatch(createCustomerBasket(`${config.createCartUrl}`)).then(res => {
       if (res.payload.data.status === 401) {
         signOut();
       }

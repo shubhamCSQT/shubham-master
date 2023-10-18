@@ -18,6 +18,7 @@ import { customerId } from '@/utils/appUtils';
 import { getCustomerCartItems } from '@/redux/cartItemsApi/CartItemsAsyncThunk';
 import CommonOptionsSelector from '@/components/CommonOptionsSelector/CommonOptionsSelector';
 import { getShippmentMethods } from '@/redux/shippmentMethodApi/ShippmentMethodApiAsyncThunk';
+import config from '@/config';
 
 const CheckoutScreen = props => {
   const navigation = useNavigation();
@@ -128,7 +129,7 @@ const CheckoutScreen = props => {
     };
     const confirmOrder = await api.post(`sfcc/placeOrder`, reqBody);
     if (confirmOrder?.data?.status === 200) {
-      dispatch(createCustomerBasket(`sfcc/createCart`));
+      dispatch(createCustomerBasket(`${config.createCartUrl}`));
       dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
       dispatch(getCustomerCartItems(`sfcc/cartDetail/${basketId}`));
       Alert.alert('Order Placed', 'Your order is placed successfully');

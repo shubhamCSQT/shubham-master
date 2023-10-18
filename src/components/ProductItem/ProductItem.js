@@ -4,6 +4,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Box, Text } from '@atoms';
 import Icons from '@/assets/constants/Icons';
+import config from '@/config';
 
 const ProductItem = React.memo(({ item }) => {
   const navigation = useNavigation();
@@ -22,9 +23,14 @@ const ProductItem = React.memo(({ item }) => {
               uri:
                 item?.SkuImageUrl ||
                 item?.product_image ||
-                item?.images?.image1,
+                item?.images?.image1 ||
+                item?.skus?.[0]?.images ||
+                item?.productImage,
             }}
-            style={styles.productImage}
+            style={[
+              styles.productImage,
+              { resizeMode: config.app.isSfcc ? 'cover' : 'contain' },
+            ]}
           />
         </Box>
         <Box maxWidth="95%">
@@ -34,7 +40,10 @@ const ProductItem = React.memo(({ item }) => {
             color="darkText"
             numberOfLines={2}
           >
-            {item?.ProductName || item?.product_name || item?.name}
+            {item?.ProductName ||
+              item?.product_name ||
+              item?.name ||
+              item?.productName}
           </Text>
         </Box>
         <Box
@@ -45,7 +54,10 @@ const ProductItem = React.memo(({ item }) => {
         >
           <Box>
             <Text variant="semiBold14" color="darkText">
-              $ {item?.basePrice || item?.product_price?.listPrice}
+              $
+              {item?.basePrice ||
+                item?.product_price?.listPrice ||
+                item?.productPrice?.DEFAULT}
             </Text>
           </Box>
         </Box>
@@ -74,7 +86,6 @@ const styles = StyleSheet.create({
     height: 250,
     marginBottom: 8,
     backgroundColor: 'white',
-    resizeMode: 'cover',
   },
   productTitle: {
     fontSize: 16,

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Box } from '@/atoms';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 export const SLIDER_WIDTH = Dimensions.get('window').width + 1;
@@ -5,7 +6,10 @@ export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 1);
 export const CarouselCardItem = ({ item, index }) => {
   return (
     <Box style={styles.container} key={index}>
-      <Image source={{ uri: item?.image }} style={styles.image} />
+      <Image
+        source={{ uri: item?.image || item?.images }}
+        style={styles.image}
+      />
     </Box>
   );
 };
@@ -30,5 +34,6 @@ const styles = StyleSheet.create({
   image: {
     width: ITEM_WIDTH,
     height: 300,
+    resizeMode: 'contain',
   },
 });
