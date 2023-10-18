@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RemoveIcon } from '@/assets/svgs';
 import { api } from '@/api/SecureAPI';
 const OrderItem = ({ item }) => {
+  console.log('item: ', item);
   return (
     <Box
       borderRadius={8}

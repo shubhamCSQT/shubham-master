@@ -28,11 +28,13 @@ export default function BottomTabNavigator() {
   const customerBasket = useSelector(
     state => state.getCustomerBasketApiSlice?.customerBasket?.data,
   );
+  console.log('customerBasket: ', customerBasket);
 
   useEffect(() => {
+    console.log('isUserLoggedIn: ', isUserLoggedIn);
+
     dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`));
     dispatch(createCustomerBasket(`sfcc/createCart`));
-
     // if (isUserLoggedIn) {
     // }
     // if(customerBasket?.total===0){

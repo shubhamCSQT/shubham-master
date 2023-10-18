@@ -80,7 +80,6 @@ const ProductDetailsScreen = props => {
             withCredentials: true,
           },
         );
-        console.log('response: ', response?.data);
 
         if (response?.status == 401) {
           setIsLoadingAddToCart(false);
@@ -109,6 +108,8 @@ const ProductDetailsScreen = props => {
       };
       addToCart();
     } else {
+      setIsLoadingAddToCart(false);
+      setIsLoading(false);
       Alert.alert('basket Id is not specified');
     }
   };
@@ -252,7 +253,6 @@ const ProductDetailsScreen = props => {
               )}
               <Box></Box>
             </ScrollView>
-
             <Box
               padding="s16"
               backgroundColor="white"

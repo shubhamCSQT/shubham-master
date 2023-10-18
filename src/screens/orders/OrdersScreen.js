@@ -15,6 +15,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import OrderItem from './components/OrderItem';
 const OrderScreen = () => {
+  console.log('customerId: ', customerId);
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);

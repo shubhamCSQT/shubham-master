@@ -26,6 +26,7 @@ const CheckoutScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOrderConfirm, setIsOrderConfirm] = useState(false);
   const [selectedShippmentIndex, setSelectedShippmentIndex] = useState(0);
+  const [flag, setFlag] = useState(false);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -39,14 +40,20 @@ const CheckoutScreen = props => {
       state?.getShippmentMethodsApiSlice?.shippmentMethods?.data
         ?.applicable_shipping_methods,
   );
+  console.log('shippmentMethods: ', shippmentMethods);
 
   useEffect(() => {
-    setIsLoading(true);
-    dispatch(getShippmentMethods(`sfcc/shipping_method/${basketId}/me`)).then(
-      () => {
-        setIsLoading(false);
-      },
-    );
+    setFlag(false);
+    const fetchShippmentMethods = async () => {
+      setIsLoading(true);
+      await dispatch(
+        getShippmentMethods(`sfcc/shipping_method/${basketId}/me`),
+      ).then(() => {
+        setFlag(true);
+      });
+      setIsLoading(false);
+    };
+    fetchShippmentMethods();
   }, [basketId, selectedShippmentIndex]);
 
   useEffect(() => {
@@ -70,43 +77,45 @@ const CheckoutScreen = props => {
         id: shippmentMethods[selectedShippmentIndex]?.id,
       };
 
-      const response = await api.put(
-        `sfcc/new_shippment_method/${basketId}?shipment_id=me`,
-        reqBodyShippment,
-      );
-      const shippment_address = await api.put(
-        `sfcc/new_shipping_address/${basketId}?shipment_id=me`,
-        reqBody,
-      );
-      const billingAddress = await api.put(
-        `sfcc/new_billing_address/${basketId}`,
-        reqBody,
-      );
-      setCheckoutDetails(billingAddress?.data?.data);
+      if (shippmentMethods?.length > 0 && flag === true) {
+        const response = await api.put(
+          `sfcc/new_shippment_method/${basketId}?shipment_id=me`,
+          reqBodyShippment,
+        );
+        const shippment_address = await api.put(
+          `sfcc/new_shipping_address/${basketId}?shipment_id=me`,
+          reqBody,
+        );
+        const billingAddress = await api.put(
+          `sfcc/new_billing_address/${basketId}`,
+          reqBody,
+        );
+        setCheckoutDetails(billingAddress?.data?.data);
 
-      const reqBodyPayment = {
-        payment_card: {
-          card_type: 'Visa',
-          credit_card_expired: false,
-          credit_card_token: '123',
-          expiration_month: 8,
-          expiration_year: 2024,
-          holder: 'shubham verma',
-          issue_number: '123',
-          number: '411111111111',
-          security_code: '123',
-          valid_from_month: 4,
-          valid_from_year: 21,
-        },
-        amount: billingAddress?.data?.data?.amount,
-        payment_method_id: 'CREDIT_CARD',
-      };
-      const confirmPayment = await api.post(
-        `sfcc/confirmPayment/${basketId}`,
-        reqBodyPayment,
-      );
+        const reqBodyPayment = {
+          payment_card: {
+            card_type: 'Visa',
+            credit_card_expired: false,
+            credit_card_token: '123',
+            expiration_month: 8,
+            expiration_year: 2024,
+            holder: 'shubham verma',
+            issue_number: '123',
+            number: '411111111111',
+            security_code: '123',
+            valid_from_month: 4,
+            valid_from_year: 21,
+          },
+          amount: billingAddress?.data?.data?.amount,
+          payment_method_id: 'CREDIT_CARD',
+        };
+        const confirmPayment = await api.post(
+          `sfcc/confirmPayment/${basketId}`,
+          reqBodyPayment,
+        );
 
-      setIsLoading(false);
+        setIsLoading(false);
+      }
     };
     shipment();
   }, [basketId, selectedAddressIndex, selectedShippmentIndex]);
@@ -165,7 +174,7 @@ const CheckoutScreen = props => {
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text>Subtotal</Text>
                     {checkoutDetails?.product_sub_total ? (
-                      <Text>$ {checkoutDetails?.product_sub_total}</Text>
+                      <Text>$ {checkoutDetails?.product_sub_total || 0}</Text>
                     ) : (
                       ''
                     )}
@@ -173,7 +182,7 @@ const CheckoutScreen = props => {
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text>Shipping</Text>
                     {checkoutDetails?.shipping_total ? (
-                      <Text>$ {checkoutDetails?.shipping_total}</Text>
+                      <Text>$ {checkoutDetails?.shipping_total || 0}</Text>
                     ) : (
                       ''
                     )}
@@ -182,7 +191,7 @@ const CheckoutScreen = props => {
                     <Text>Sales Tax</Text>
 
                     {checkoutDetails?.tax_total ? (
-                      <Text>$ {checkoutDetails?.tax_total}</Text>
+                      <Text>$ {checkoutDetails?.tax_total || 0}</Text>
                     ) : (
                       ''
                     )}
@@ -190,7 +199,7 @@ const CheckoutScreen = props => {
                   <Box flexDirection="row" justifyContent="space-between">
                     <Text variant="bold14">Total</Text>
                     {checkoutDetails?.order_total ? (
-                      <Text>$ {checkoutDetails?.order_total}</Text>
+                      <Text>$ {checkoutDetails?.order_total || 0}</Text>
                     ) : (
                       ''
                     )}

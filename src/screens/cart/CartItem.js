@@ -19,20 +19,12 @@ const CartItem = ({ item }) => {
 
   const removeItem = async itemId => {
     setIsLoading(true);
-    const reqBody = {
-      item_id: itemId,
-    };
-    const req = JSON.stringify(reqBody);
     const response = await api
-      .Delete(`sfcc/removeItem/${customerCartId}`, req)
+      .Delete(`sfcc/removeItem/${customerCartId}/items/${itemId}`)
       .then(res => {
-        console.log('res?.data?.status1: ', res?.data?.status);
-
         if (res?.data?.status == 204) {
           dispatch(getCustomerCartItems(`sfcc/cartDetail/${customerCartId}`))
             .then(res => {
-              console.log('res.payload.status2: ', res.payload.status);
-
               if (res.payload.status === 200) {
                 setIsLoading(false);
               } else {

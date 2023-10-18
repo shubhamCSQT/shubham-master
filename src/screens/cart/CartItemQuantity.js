@@ -11,13 +11,15 @@ const CartItemQuantity = ({ cartItem, customerCartId, removeItemTrigger }) => {
 
   const dispatch = useDispatch();
 
-  const changeQuantity = async (itemId, count) => {
+  const changeQuantity = async (itemId, count, indexId) => {
     setIsLoading(true);
     const reqBody = {
+      itemId: itemId,
       quantity: count,
+      indexId: indexId,
     };
     const resp = await api.patch(
-      `sfcc/update-cart/${customerCartId}/items/${itemId}`,
+      `sfcc/updateItem/${customerCartId}`,
       JSON.stringify(reqBody),
     );
     const response = resp.data;
@@ -47,7 +49,11 @@ const CartItemQuantity = ({ cartItem, customerCartId, removeItemTrigger }) => {
         onPress={() =>
           cartItem?.quantity == 1
             ? removeItemTrigger(cartItem?.itemId)
-            : changeQuantity(cartItem?.itemId, cartItem?.quantity - 1)
+            : changeQuantity(
+                cartItem?.itemId,
+                cartItem?.quantity - 1,
+                cartItem?.indexId,
+              )
         }
         style={styles.quantityButton}
       >
