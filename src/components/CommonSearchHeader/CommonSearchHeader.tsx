@@ -3,6 +3,7 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Text, Box } from '@/atoms';
 import Icons from '@/assets/constants/Icons';
+import { IS_IOS } from '@/utils/appUtils';
 
 const CommonSearchHeader = () => {
   return (
@@ -11,12 +12,13 @@ const CommonSearchHeader = () => {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
+        pt="s8"
       >
         <TouchableOpacity style={{ flex: 1, height: 32 }}>
           <Box
             flex={1}
             backgroundColor="white"
-            borderWidth={0.5}
+            borderWidth={IS_IOS ? 0.5 : 1}
             borderColor="black"
             justifyContent="center"
             paddingHorizontal="s8"
