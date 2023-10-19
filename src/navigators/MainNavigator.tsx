@@ -122,16 +122,10 @@ const MainNavigator = () => {
   return (
     <AuthContext.Provider value={authContext}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {state.userToken == null ? (
-          <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
-        ) : (
-          <>
-            <Stack.Screen
-              name="HomeStackNavigator"
-              component={HomeStackNavigator}
-            />
-          </>
-        )}
+        <Stack.Screen
+          name="HomeStackNavigator"
+          component={HomeStackNavigator}
+        />
       </Stack.Navigator>
     </AuthContext.Provider>
   );

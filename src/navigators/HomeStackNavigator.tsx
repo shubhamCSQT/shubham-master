@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '@/screens/auth/LoginScreen';
@@ -15,15 +15,26 @@ import OrderDetailsScreen from '@/screens/orders/OrderDetailsScreen';
 import ViewAddress from '@/screens/address/components/ViewAddress';
 import AddAddress from '@/screens/address/components/AddAddress';
 import AddressScreen from '@/screens/address/AddressScreen';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+
 const Stack = createStackNavigator();
 
 const HomeStackNavigator = () => {
+  const { isUserLoggedIn } = useIsUserLoggedIn();
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
+      {isUserLoggedIn === false ? (
+        <>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        </>
+      ) : (
+        <></>
+      )}
       <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen

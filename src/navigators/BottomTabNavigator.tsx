@@ -35,19 +35,21 @@ export default function BottomTabNavigator() {
 
   useEffect(() => {
     console.log('isUserLoggedIn: ', isUserLoggedIn);
-
-    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
-      res => {
+    if (isUserLoggedIn) {
+      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
+        res => {
+          if (res.payload.data.status === 401) {
+            signOut();
+          }
+        },
+      );
+      dispatch(createCustomerBasket(`${config.createCartUrl}`)).then(res => {
         if (res.payload.data.status === 401) {
           signOut();
         }
-      },
-    );
-    dispatch(createCustomerBasket(`${config.createCartUrl}`)).then(res => {
-      if (res.payload.data.status === 401) {
-        signOut();
-      }
-    });
+      });
+    }
+
     // if (isUserLoggedIn) {
     // }
     // if(customerBasket?.total===0){
@@ -59,6 +61,7 @@ export default function BottomTabNavigator() {
       () => {},
     );
   }, [customerId]);
+
   return (
     <Tab.Navigator
       screenOptions={{
