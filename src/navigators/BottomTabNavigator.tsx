@@ -1,67 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useContext, useEffect } from 'react';
+import React, {  } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
-import CartScreen from '../screens/cart/CartScreen';
-import { Image } from 'react-native';
 import Icons from '../assets/constants/Icons';
-import CollectionScreen from '@/screens/collection/CollectionsScreen';
 import CollectionsScreen from '@/screens/collection/CollectionsScreen';
 import { theme } from '@/atoms';
-import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 import { BottomTabIcon } from '@/components/bottomTabIcon/BottomTabIcon';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
-import { customerId } from '@/utils/appUtils';
-import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
-import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
-import { AuthContext } from './MainNavigator';
-import config from '@/config';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const { isUserLoggedIn } = useIsUserLoggedIn();
-  const { signOut } = useContext(AuthContext);
-
-  const dispatch = useDispatch();
-
-  const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice?.customerBasket?.data,
-  );
-  console.log('customerBasket: ', customerBasket);
-
-  useEffect(() => {
-    console.log('isUserLoggedIn: ', isUserLoggedIn);
-    if (isUserLoggedIn) {
-      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
-        res => {
-          if (res.payload.data.status === 401) {
-            signOut();
-          }
-        },
-      );
-      dispatch(createCustomerBasket(`${config.createCartUrl}`)).then(res => {
-        if (res.payload.data.status === 401) {
-          signOut();
-        }
-      });
-    }
-
-    // if (isUserLoggedIn) {
-    // }
-    // if(customerBasket?.total===0){
-    // }
-  }, []);
-
-  useEffect(() => {
-    dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(
-      () => {},
-    );
-  }, [customerId]);
-
   return (
     <Tab.Navigator
       screenOptions={{

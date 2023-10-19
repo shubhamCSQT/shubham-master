@@ -47,13 +47,10 @@ const HomeStackNavigator = () => {
         name="PersonalDetailsScreen"
         component={PersonalDetailsScreen}
       />
-
       <Stack.Screen name="CartScreen" component={CartScreen} />
       <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-
       <Stack.Screen name="OrdersScreen" component={OrderScreen} />
       <Stack.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
-
       <Stack.Screen name="ViewAddress" component={ViewAddress} />
       <Stack.Screen name="AddAddress" component={AddAddress} />
       <Stack.Screen name="AddressScreen" component={AddressScreen} />

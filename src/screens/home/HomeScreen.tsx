@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useContext } from 'react';
 import { StyleSheet, FlatList, StatusBar } from 'react-native';
 import { Box, theme } from '@/atoms';
 import ContentFullSection from './contentFull/ContentFullSection';
@@ -9,10 +9,60 @@ import config from '@/config';
 import { useDispatch, useSelector } from 'react-redux';
 import HomePlp from './homePlp/HomePlp';
 import { getBestSellings } from '@/redux/bestSellingProductApi/BestSellingProductApiAsyncThunk';
+import { customerId } from '@/utils/appUtils';
+import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
+import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
+import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
+import { AuthContext } from '@/navigators/MainNavigator';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
+
+  const { isUserLoggedIn } = useIsUserLoggedIn();
+  const { signOut } = useContext(AuthContext);
+
+  //  const dispatch = useDispatch();
+
+  const customerBasket = useSelector(
+    state => state.getCustomerBasketApiSlice?.customerBasket?.data,
+  );
+  console.log('customerBasket: ', customerBasket);
+
+  useEffect(() => {
+    if (isUserLoggedIn && customerBasket?.total >= 1) {
+      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
+        res => {
+          if (res.payload.data.status === 401) {
+            signOut();
+          }
+        },
+      );
+    }
+    if (isUserLoggedIn || customerBasket?.total === 0) {
+      dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
+        console.log('res: ', res);
+        if (res.payload.data.status === 401) {
+          signOut();
+        } else {
+          dispatch(
+            getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`),
+          ).then(res => {
+            if (res.payload.data.status === 401) {
+              signOut();
+            }
+          });
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(
+      () => {},
+    );
+  }, [customerId]);
 
   const newArrivals = useSelector(
     state => state?.getNewArrivalApiSlice?.newArrivals?.data,
