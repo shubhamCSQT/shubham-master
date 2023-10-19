@@ -39,6 +39,7 @@ const ProductDetailsScreen = props => {
   const productDetails = useSelector(
     state => state?.getProductDetailsApiSlice?.productDetails?.data,
   );
+  console.log('productDetails: ', productDetails);
 
   const basketId = useSelector(
     state =>

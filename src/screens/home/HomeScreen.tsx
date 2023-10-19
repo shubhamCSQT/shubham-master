@@ -31,24 +31,31 @@ const HomeScreen = () => {
   console.log('customerBasket: ', customerBasket);
 
   useEffect(() => {
-    console.log('isUserLoggedIn: ', isUserLoggedIn);
-
-    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
-      res => {
+    if (isUserLoggedIn && customerBasket?.total >= 1) {
+      dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
+        res => {
+          if (res.payload.data.status === 401) {
+            signOut();
+          }
+        },
+      );
+    }
+    if (isUserLoggedIn || customerBasket?.total === 0) {
+      dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
+        console.log('res: ', res);
         if (res.payload.data.status === 401) {
           signOut();
+        } else {
+          dispatch(
+            getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`),
+          ).then(res => {
+            if (res.payload.data.status === 401) {
+              signOut();
+            }
+          });
         }
-      },
-    );
-    dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
-      if (res.payload.data.status === 401) {
-        signOut();
-      }
-    });
-    // if (isUserLoggedIn) {
-    // }
-    // if(customerBasket?.total===0){
-    // }
+      });
+    }
   }, []);
 
   useEffect(() => {
