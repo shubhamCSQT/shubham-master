@@ -22,42 +22,6 @@ import { AuthContext } from './MainNavigator';
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const { isUserLoggedIn } = useIsUserLoggedIn();
-  const { signOut } = useContext(AuthContext);
-
-  const dispatch = useDispatch();
-
-  const customerBasket = useSelector(
-    state => state.getCustomerBasketApiSlice?.customerBasket?.data,
-  );
-  console.log('customerBasket: ', customerBasket);
-
-  useEffect(() => {
-    console.log('isUserLoggedIn: ', isUserLoggedIn);
-
-    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
-      res => {
-        if (res.payload.data.status === 401) {
-          signOut();
-        }
-      },
-    );
-    dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
-      if (res.payload.data.status === 401) {
-        signOut();
-      }
-    });
-    // if (isUserLoggedIn) {
-    // }
-    // if(customerBasket?.total===0){
-    // }
-  }, []);
-
-  useEffect(() => {
-    dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(
-      () => {},
-    );
-  }, [customerId]);
   return (
     <Tab.Navigator
       screenOptions={{

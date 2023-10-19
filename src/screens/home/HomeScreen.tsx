@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useContext } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { Box } from '@/atoms';
 import ContentFullSection from './contentFull/ContentFullSection';
@@ -9,10 +9,53 @@ import config from '@/config';
 import { useDispatch, useSelector } from 'react-redux';
 import HomePlp from './homePlp/HomePlp';
 import { getBestSellings } from '@/redux/bestSellingProductApi/BestSellingProductApiAsyncThunk';
+import { customerId } from '@/utils/appUtils';
+import { getCustomerDetails } from '@/redux/profileApi/ProfileApiAsyncThunk';
+import { createCustomerBasket } from '@/redux/createBasketApi/CreateBasketApiAsyncThunk';
+import { getCustomerBasketApi } from '@/redux/basket/BasketApiAsyncThunk';
+import { AuthContext } from '@/navigators/MainNavigator';
+import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
+
+  const { isUserLoggedIn } = useIsUserLoggedIn();
+  const { signOut } = useContext(AuthContext);
+
+  //  const dispatch = useDispatch();
+
+  const customerBasket = useSelector(
+    state => state.getCustomerBasketApiSlice?.customerBasket?.data,
+  );
+  console.log('customerBasket: ', customerBasket);
+
+  useEffect(() => {
+    console.log('isUserLoggedIn: ', isUserLoggedIn);
+
+    dispatch(getCustomerBasketApi(`sfcc/getCustomerCart/${customerId}`)).then(
+      res => {
+        if (res.payload.data.status === 401) {
+          signOut();
+        }
+      },
+    );
+    dispatch(createCustomerBasket(`sfcc/createCart`)).then(res => {
+      if (res.payload.data.status === 401) {
+        signOut();
+      }
+    });
+    // if (isUserLoggedIn) {
+    // }
+    // if(customerBasket?.total===0){
+    // }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getCustomerDetails(`sfcc/user-details/${customerId}`)).then(
+      () => {},
+    );
+  }, [customerId]);
 
   const newArrivals = useSelector(
     state => state?.getNewArrivalApiSlice?.newArrivals?.data,
