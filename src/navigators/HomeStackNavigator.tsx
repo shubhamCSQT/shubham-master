@@ -28,6 +28,7 @@ const HomeStackNavigator = () => {
         headerShown: false,
       }}
     >
+      <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
       {isUserLoggedIn === false ? (
         <>
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
@@ -35,7 +36,6 @@ const HomeStackNavigator = () => {
       ) : (
         <></>
       )}
-      <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
       <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
       <Stack.Screen
         name="ProductDetailsScreen"

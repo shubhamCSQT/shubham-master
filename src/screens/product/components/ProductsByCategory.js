@@ -13,9 +13,13 @@ import config from '@/config';
 
 const ProductsByCategory = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const categoryId = props.route?.params?.item?.parent_Id;
+
+  const isCategoryTrue = props.route.params.isCategoryTrue;
+  const categoryId = isCategoryTrue
+    ? props.route?.params?.item?.parent_Id
+    : props.route?.params?.item?.Id;
+
   const categoryName = props.route?.params?.item?.name;
-  const isCategoryTrue = props.route?.params?.isCategoryTrue;
   const categoryEndPoint = isCategoryTrue
     ? config.productsByCategory
     : config.productsBySubCategory;
@@ -27,7 +31,6 @@ const ProductsByCategory = props => {
       state?.getProductsByCategoryApiSlice?.productsByCategory?.data
         ?.productData,
   );
-  console.log('productsByCategory: ', productsByCategory);
 
   useEffect(() => {
     setIsLoading(true);
@@ -37,7 +40,7 @@ const ProductsByCategory = props => {
         console.error('Error fetching products:', error);
         setIsLoading(false);
       });
-  }, [categoryId]);
+  }, []);
 
   const renderItem = ({ item, index }) => (
     <>

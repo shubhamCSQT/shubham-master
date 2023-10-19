@@ -54,7 +54,6 @@ const CollectionsScreen = () => {
         onPress={() => {
           navigation.navigate('ProductsByCategory', {
             item: item,
-            isSubCategoryTrue: true,
           });
         }}
         style={styles.subCategoryItem}

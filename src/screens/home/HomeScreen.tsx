@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
-import { StyleSheet, FlatList } from 'react-native';
-import { Box } from '@/atoms';
+import { StyleSheet, FlatList, StatusBar } from 'react-native';
+import { Box, theme } from '@/atoms';
 import ContentFullSection from './contentFull/ContentFullSection';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CommonSearchHeader from '@/components/CommonSearchHeader/CommonSearchHeader';
@@ -52,6 +52,7 @@ const HomeScreen = () => {
 
   return (
     <Box flex={1} backgroundColor="white">
+      <StatusBar animated={true} backgroundColor={theme.colors.background} />
       <CommonSearchHeader />
       <FlatList
         data={ViewData}

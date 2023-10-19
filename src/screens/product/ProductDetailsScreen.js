@@ -233,7 +233,6 @@ const ProductDetailsScreen = props => {
                               keyExtractor={(item, index) => index.toString()}
                               contentContainerStyle={{
                                 flexDirection: 'row',
-                                flexWrap: 'wrap',
                                 flexBasis: 1,
                                 justifyContent: 'space-between',
                                 paddingHorizontal: 4,
