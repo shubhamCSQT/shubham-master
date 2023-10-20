@@ -16,6 +16,7 @@ import ViewAddress from '@/screens/address/components/ViewAddress';
 import AddAddress from '@/screens/address/components/AddAddress';
 import AddressScreen from '@/screens/address/AddressScreen';
 import { useIsUserLoggedIn } from '@/hooks/useIsUserLoggedIn';
+import SearchScreen from '@/screens/search/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,7 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="ViewAddress" component={ViewAddress} />
       <Stack.Screen name="AddAddress" component={AddAddress} />
       <Stack.Screen name="AddressScreen" component={AddressScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
     </Stack.Navigator>
   );
 };
