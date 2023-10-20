@@ -1,5 +1,7 @@
 import { Box, Text, theme } from '@/atoms';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   ActivityIndicator,
   FlatList,
@@ -9,28 +11,31 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import Icons from '@/assets/constants/Icons';
-
 import { IS_IOS } from '@/utils/appUtils';
 import GoBackButton from '@/components/GoBackButton/GoBackButton';
 import { commonApi } from '@/api/CommanAPI';
 import ProductItem from '@/components/ProductItem/ProductItem';
+import { searchProducts } from '@/redux/searchApi/SearchApiAsyncThunk';
 
 const SearchScreen = ({ onPress }) => {
   const [value, setValue] = useState('');
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  //   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [emptyItemFlag, setEmptyItemFlag] = useState(false);
-  const handleSearch = async () => {
+
+  const products = useSelector(
+    state => state?.searchProductsApiSlice?.products?.data?.ProductData,
+  );
+
+  const handleSearch = () => {
     setIsLoading(true);
-    const resp = await commonApi.get(`/sfcc/products-by-query/${value}`);
-    if (resp?.data?.status === 200) {
-      if (resp?.data?.data?.ProductData?.length === 0) {
+    dispatch(searchProducts(`sfcc/products-by-query/${value}`)).then(resp => {
+      if (resp?.payload?.data?.ProductData?.length == 0) {
         setEmptyItemFlag(true);
       }
-      setProducts(resp?.data?.data?.ProductData);
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    });
   };
   const ListEmptyComponent = () => {
     return (
@@ -41,7 +46,6 @@ const SearchScreen = ({ onPress }) => {
   };
   const renderItem = ({ item, index }) => (
     <>
-      {/* <ProductItem item={item} index={index} /> */}
       <ProductItem item={item} />
     </>
   );
@@ -67,12 +71,10 @@ const SearchScreen = ({ onPress }) => {
             autoFocus={true}
             returnKeyType="search"
             onSubmitEditing={handleSearch}
-            // style={styles.textInput}
             style={{ width: '100%', fontSize: 12 }}
           />
         </Box>
       </Box>
-
       <Box mt="s8" flex={1}>
         {isLoading ? (
           <ActivityIndicator />

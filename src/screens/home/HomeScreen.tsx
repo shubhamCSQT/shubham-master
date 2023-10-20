@@ -23,8 +23,6 @@ const HomeScreen = () => {
   const { isUserLoggedIn } = useIsUserLoggedIn();
   const { signOut } = useContext(AuthContext);
 
-  //  const dispatch = useDispatch();
-
   const customerBasket = useSelector(
     state => state.getCustomerBasketApiSlice?.customerBasket?.data,
   );
